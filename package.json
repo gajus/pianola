@@ -1,0 +1,79 @@
+{
+  "author": {
+    "email": "gajus@gajus.com",
+    "name": "Gajus Kuizinas",
+    "url": "http://gajus.com"
+  },
+  "ava": {
+    "babel": "inherit",
+    "require": [
+      "babel-register"
+    ]
+  },
+  "dependencies": {
+    "ajv": "^4.11.2",
+    "debug": "^2.6.0",
+    "es6-error": "^4.0.1",
+    "flow-runtime": "^0.2.1",
+    "nearley": "^2.7.11"
+  },
+  "description": "A declarative function composition and evaluation engine.",
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "babel-cli": "^6.22.2",
+    "babel-plugin-flow-runtime": "0.2.1",
+    "babel-plugin-istanbul": "^3.1.2",
+    "babel-plugin-transform-flow-comments": "^6.22.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.22.0",
+    "babel-preset-env": "^1.1.8",
+    "babel-register": "^6.22.0",
+    "coveralls": "^2.11.15",
+    "eslint": "^3.14.1",
+    "eslint-config-canonical": "^7.1.0",
+    "flow-bin": "^0.38.0",
+    "husky": "^0.13.1",
+    "nyc": "^10.1.2",
+    "semantic-release": "^6.3.6",
+    "sinon": "^1.17.7"
+  },
+  "engines": {
+    "node": ">=5"
+  },
+  "keywords": [
+    "composition",
+    "declerative",
+    "expression"
+  ],
+  "license": "BSD-3-Clause",
+  "main": "./dist/index.js",
+  "name": "pianola",
+  "nyc": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "src/grammars/*.js"
+    ],
+    "instrument": false,
+    "reporter": [
+      "text-lcov"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": false
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gajus/pianola"
+  },
+  "scripts": {
+    "build": "npm run compile-grammar && babel ./src --out-dir ./dist --copy-files --source-maps",
+    "compile-grammar": "nearleyc ./src/grammars/expressionGrammar.ne --out ./src/grammars/expressionGrammar.js",
+    "lint": "eslint ./src ./test && flow",
+    "precommit": "npm run lint && npm run test",
+    "test": "ava --verbose"
+  },
+  "version": "0.0.0"
+}
