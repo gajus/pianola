@@ -29,7 +29,7 @@ A declarative function composition and evaluation engine.
 |Name|Type|Description|Default value|
 |---|---|---|---|
 |`bindle`|`Object`|(optional) A used-defined object that is passed to every subroutine.|
-|`handleResult`|[`ResultHandlerType`](./src/types.js)|A function invoked after each subroutine with the result of the current subroutine and the subject value used to execute the subroutine.|
+|`handleResult`|(optional) [`ResultHandlerType`](./src/types.js)|A function invoked after each subroutine with the result of the current subroutine and the subject value used to execute the subroutine.|
 |`subroutines`|[`$PropertyType<UserConfigurationType, 'subroutines'>`](./src/types.js)|User defined subroutines. See [subroutines](#subroutines).|N/A|
 
 ## Subroutines
