@@ -8,7 +8,8 @@ type QueryChildrenType = {
 
 export type DenormalizedQueryType =
   string |
-  Array<string | QueryChildrenType>;
+  Array<string | QueryChildrenType> |
+  QueryChildrenType;
 
 export type CommandType = {|
   +subroutine: string,

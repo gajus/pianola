@@ -94,6 +94,54 @@ test('converts simple object command into "adopt" subroutine (string expression)
   t.deepEqual(createQuery(denormalizedQuery), query);
 });
 
+test('converts simple object command into "adopt" subroutine (string expression) (nested; simple object)', (t): void => {
+  const denormalizedQuery = [
+    'foo',
+    'bar',
+    {
+      baz: 'baz',
+      qux: {
+        quux: 'quux'
+      }
+    }
+  ];
+
+  const query: QueryType = [
+    {
+      subroutine: 'foo',
+      values: []
+    },
+    {
+      subroutine: 'bar',
+      values: []
+    },
+    {
+      children: {
+        baz: [
+          {
+            subroutine: 'baz',
+            values: []
+          }
+        ],
+        qux: [
+          {
+            children: {
+              quux: [
+                {
+                  subroutine: 'quux',
+                  values: []
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ];
+
+  t.deepEqual(createQuery(denormalizedQuery), query);
+});
+
 test('converts simple object command into "adopt" subroutine (array expression)', (t): void => {
   const denormalizedQuery = [
     'foo',

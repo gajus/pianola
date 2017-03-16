@@ -9,7 +9,7 @@ import type {
 } from '../types';
 
 const createQuery = (denormalizedQuery: DenormalizedQueryType): QueryType => {
-  if (typeof denormalizedQuery === 'string') {
+  if (typeof denormalizedQuery === 'string' || !Array.isArray(denormalizedQuery)) {
     // eslint-disable-next-line no-param-reassign
     denormalizedQuery = [
       denormalizedQuery
