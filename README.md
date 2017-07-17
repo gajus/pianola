@@ -28,7 +28,7 @@ A declarative function composition and evaluation engine.
 
 |Name|Type|Description|Default value|
 |---|---|---|---|
-|`bindle`|`Object`|(optional) A used-defined object that is passed to every subroutine.|
+|`bindle`|`Object`|(optional) A user-defined object that is passed to every subroutine.|
 |`handleResult`|[`ResultHandlerType`](./src/types.js)|(optional) A function invoked after each subroutine with the result of the current subroutine and the subject value used to execute the subroutine.|
 |`subroutines`|[`$PropertyType<UserConfigurationType, 'subroutines'>`](./src/types.js)|User defined subroutines. See [subroutines](#subroutines).|N/A|
 
@@ -273,6 +273,6 @@ Pianola throws the following errors to indicate a predictable error state. All P
 
 ## Debugging
 
-pianola is using [`debug`](https://www.npmjs.com/package/debug) to log debugging information.
+Pianola is using [`debug`](https://www.npmjs.com/package/debug) to log debugging information.
 
 Export `DEBUG=pianola:*` environment variable to enable pianola debug log.
