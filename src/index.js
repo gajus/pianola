@@ -13,7 +13,16 @@ import type {
   UserConfigurationType
 } from './types';
 
+class FinalResultSentinel {
+  value: *;
+
+  constructor (value: *) {
+    this.value = value;
+  }
+}
+
 export {
+  FinalResultSentinel,
   NotFoundError,
   PianolaError
 };
@@ -45,8 +54,16 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
 
     result = subroutines[instruction.subroutine](result, instruction.values, bindle);
 
+    if (result instanceof FinalResultSentinel) {
+      return result.value;
+    }
+
     if (handleResult) {
-      handleResult(result, lastResult);
+      const handleResultResult = handleResult(result, lastResult);
+
+      if (handleResultResult instanceof FinalResultSentinel) {
+        return handleResultResult.value;
+      }
     }
 
     index++;

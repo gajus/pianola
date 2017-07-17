@@ -12,6 +12,8 @@ A declarative function composition and evaluation engine.
 * [Configuration](#configuration)
 * [Subroutines](#subroutines)
   * [Defining subroutines](#defining-subroutines)
+* [Sentinels](#sentinels)
+  * [`FinalResultSentinel`](#finalresultsentinel)
 * [Expression reference](#expression-reference)
   * [The pipe operator (`|`)](#the-pipe-operator-)
 * [Cookbook](#cookbook)
@@ -95,6 +97,34 @@ The above example prints:
 ```
 0 "foo" "bar"
 1 "baz" "qux"
+
+```
+
+## Sentinels
+
+### `FinalResultSentinel`
+
+`FinalResultSentinel` is used to signal the final value, i.e. it will interrupt the routine and return the value used to construct an instance of `FinalResultSentinel`.
+
+Example:
+
+```js
+import pianola, {
+  FinalResultSentinel
+} from 'pianola';
+
+const x = pianola({
+  subroutines: {
+    a: () => {
+      return new FinalResultSentinel(null);
+    },
+    b: () => {
+      throw new Error('This method is never invoked.');
+    }
+  }
+});
+
+x('a | b', 0);
 
 ```
 

@@ -3,6 +3,7 @@
 import test from 'ava';
 import sinon from 'sinon';
 import pianola, {
+  FinalResultSentinel,
   NotFoundError
 } from '../../src';
 
@@ -60,6 +61,23 @@ test('executes the next subroutine with the result of the parent subroutine', (t
 
   t.true(bar.calledOnce);
   t.true(bar.calledWith('FOO'));
+});
+
+test('short-circuits the subroutine after receiving FinalResultSentinel', (t): void => {
+  const foo = sinon.stub().returns(new FinalResultSentinel('FOO'));
+  const bar = sinon.stub().throws(new Error());
+
+  const x = pianola({
+    subroutines: {
+      bar,
+      foo
+    }
+  });
+
+  const result = x('foo | bar', null);
+
+  t.true(foo.calledOnce);
+  t.true(result === 'FOO');
 });
 
 test('executes a subroutine with a list of the parameter values', (t): void => {
