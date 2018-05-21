@@ -37,7 +37,7 @@
     "sinon": "^5.0.7"
   },
   "engines": {
-    "node": ">=5"
+    "node": ">=8"
   },
   "keywords": [
     "composition",
