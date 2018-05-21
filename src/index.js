@@ -81,7 +81,8 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
 };
 
 export default (userConfiguration: UserConfigurationType) => {
-  return (denormalizedQuery: DenormalizedQueryType, startValue: mixed) => {
+  // eslint-disable-next-line flowtype/no-weak-types
+  return (denormalizedQuery: DenormalizedQueryType, startValue: mixed): any => {
     const configuration = createConfiguration(userConfiguration);
 
     const instructions = createQuery(denormalizedQuery);
