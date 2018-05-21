@@ -165,7 +165,7 @@ test('throws an error if a subroutine does not exist', (t): void => {
     subroutines: {}
   });
 
-  t.throws(() => {
+  t.throws((): void => {
     x('foo', null);
   }, NotFoundError);
 });
