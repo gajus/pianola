@@ -13,7 +13,7 @@ script:
 after_success:
   - export NODE_ENV=production
   - npm run build
-  - semantic-release pre
+  - semantic-release
 notifications:
   email: false
 sudo: false
