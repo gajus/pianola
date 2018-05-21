@@ -8,12 +8,12 @@ type QueryChildrenType = {
 
 export type DenormalizedQueryType =
   string |
-  Array<string | QueryChildrenType> |
+  $ReadOnlyArray<string | QueryChildrenType> |
   QueryChildrenType;
 
 export type CommandType = {|
   +subroutine: string,
-  +values: Array<string>
+  +values: $ReadOnlyArray<string>
 |};
 
 export type AdoptionType = {|
@@ -24,10 +24,10 @@ export type AdoptionType = {|
   }
 |};
 
-export type QueryType = Array<CommandType | AdoptionType>;
+export type QueryType = $ReadOnlyArray<CommandType | AdoptionType>;
 
 // eslint-disable-next-line flowtype/no-weak-types
-export type SubroutineType = (subject: mixed, values: Array<string>, bindle: Object) => mixed;
+export type SubroutineType = (subject: mixed, values: $ReadOnlyArray<string>, bindle: Object) => mixed;
 
 export type ResultHandlerType = (output: mixed, input: mixed) => void;
 

@@ -11,7 +11,7 @@ import type {
   CommandType
 } from '../types';
 
-export default (expression: string): Array<CommandType> => {
+export default (expression: string): $ReadOnlyArray<CommandType> => {
   const parser = new Parser(expressionGrammar.ParserRules, expressionGrammar.ParserStart);
 
   const results = parser.feed(expression).results;
