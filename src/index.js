@@ -21,12 +21,6 @@ class FinalResultSentinel {
   }
 }
 
-export {
-  FinalResultSentinel,
-  NotFoundError,
-  PianolaError
-};
-
 // eslint-disable-next-line flowtype/no-weak-types
 const play = (instructions, startValue, subroutines, bindle: Object, handleResult?: Function) => {
   let result = startValue;
@@ -78,6 +72,12 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
   }
 
   return result;
+};
+
+export {
+  FinalResultSentinel,
+  NotFoundError,
+  PianolaError
 };
 
 export default (userConfiguration: UserConfigurationType) => {
