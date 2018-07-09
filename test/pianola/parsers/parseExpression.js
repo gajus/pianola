@@ -70,3 +70,97 @@ test('parses an expression of a single subroutine with escaped values', (t): voi
     }
   ]);
 });
+
+test('parses an expression (foo "a b")', (t): void => {
+  t.deepEqual(parseExpression('foo "a b"'), [
+    {
+      subroutine: 'foo',
+      values: [
+        'a b'
+      ]
+    }
+  ]);
+});
+
+test.skip('parses an expression (foo "a b)', (t): void => {
+  t.deepEqual(parseExpression('foo "a b'), [
+    {
+      subroutine: 'foo',
+      values: [
+        '"a',
+        'b'
+      ]
+    }
+  ]);
+});
+
+test.skip('parses an expression (foo a b")', (t): void => {
+  t.deepEqual(parseExpression('foo a b"'), [
+    {
+      subroutine: 'foo',
+      values: [
+        'a',
+        'b"'
+      ]
+    }
+  ]);
+});
+
+test('parses an expression (foo \'a b\')', (t): void => {
+  t.deepEqual(parseExpression('foo \'a b\''), [
+    {
+      subroutine: 'foo',
+      values: [
+        'a b'
+      ]
+    }
+  ]);
+});
+
+test.skip('parses an expression (foo \'a b)', (t): void => {
+  t.deepEqual(parseExpression('foo \'a b'), [
+    {
+      subroutine: 'foo',
+      values: [
+        '\'a',
+        'b'
+      ]
+    }
+  ]);
+});
+
+test.skip('parses an expression (foo a b\')', (t): void => {
+  t.deepEqual(parseExpression('foo a b\''), [
+    {
+      subroutine: 'foo',
+      values: [
+        'a',
+        'b\''
+      ]
+    }
+  ]);
+});
+
+test('parses an expression (foo a b)', (t): void => {
+  t.deepEqual(parseExpression('foo a b'), [
+    {
+      subroutine: 'foo',
+      values: [
+        'a',
+        'b'
+      ]
+    }
+  ]);
+});
+
+test('parses an expression (foo "a" \'b\')', (t): void => {
+  t.deepEqual(parseExpression('foo "a" \'b\''), [
+    {
+      subroutine: 'foo',
+      values: [
+        'a',
+        'b'
+      ]
+    }
+  ]);
+});
