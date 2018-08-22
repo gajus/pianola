@@ -82,6 +82,7 @@ test('parses an expression (foo "a b")', (t): void => {
   ]);
 });
 
+// eslint-disable-next-line ava/no-skip-test
 test.skip('parses an expression (foo "a b)', (t): void => {
   t.deepEqual(parseExpression('foo "a b'), [
     {
@@ -94,6 +95,7 @@ test.skip('parses an expression (foo "a b)', (t): void => {
   ]);
 });
 
+// eslint-disable-next-line ava/no-skip-test
 test.skip('parses an expression (foo a b")', (t): void => {
   t.deepEqual(parseExpression('foo a b"'), [
     {
@@ -117,6 +119,7 @@ test('parses an expression (foo \'a b\')', (t): void => {
   ]);
 });
 
+// eslint-disable-next-line ava/no-skip-test
 test.skip('parses an expression (foo \'a b)', (t): void => {
   t.deepEqual(parseExpression('foo \'a b'), [
     {
@@ -129,6 +132,7 @@ test.skip('parses an expression (foo \'a b)', (t): void => {
   ]);
 });
 
+// eslint-disable-next-line ava/no-skip-test
 test.skip('parses an expression (foo a b\')', (t): void => {
   t.deepEqual(parseExpression('foo a b\''), [
     {
