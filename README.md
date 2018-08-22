@@ -301,8 +301,8 @@ Pianola throws the following errors to indicate a predictable error state. All P
 |`NotFoundError`|Used to indicate that a resource is not found, e.g. when a subroutine is not found.|
 |`PianolaError`|A generic error. All other Pianola errors extend from `PianolaError`.|
 
-## Debugging
+## Logging
 
-Pianola is using [`debug`](https://www.npmjs.com/package/debug) to log debugging information.
+This package is using [`roarr`](https://www.npmjs.com/package/roarr) logger to log the program's state.
 
-Export `DEBUG=pianola:*` environment variable to enable pianola debug log.
+Export `ROARR_LOG=true` environment variable to enable log printing to stdout.

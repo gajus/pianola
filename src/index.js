@@ -43,7 +43,7 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
     const lastResult = result;
 
     if (!subroutines[instruction.subroutine]) {
-      throw new NotFoundError('Subroutine does not exist.');
+      throw new NotFoundError('"' + instruction.subroutine + '" subroutine does not exist.');
     }
 
     result = subroutines[instruction.subroutine](result, instruction.values, bindle);
