@@ -201,3 +201,25 @@ test('calls handleResult for each intermediate result', (t): void => {
 
   t.true(result === 'FOO');
 });
+
+test('names results when instruction is a {[key: string]: [pianola expression]}', (t): void => {
+  const foo = sinon.stub().returns('foo');
+
+  const x = pianola({
+    subroutines: {
+      foo
+    }
+  });
+
+  const result = x([
+    {
+      a: 'foo',
+      b: 'foo'
+    }
+  ], 'qux');
+
+  t.deepEqual({
+    a: 'foo',
+    b: 'foo'
+  }, result);
+});
