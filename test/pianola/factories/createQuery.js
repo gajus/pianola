@@ -6,7 +6,7 @@ import type {
   QueryType
 } from '../../../src/types';
 
-test('converts string expressions to subroutines', (t): void => {
+test('converts string expressions to subroutines', (t) => {
   const denormalizedQuery = [
     'foo',
     'bar'
@@ -26,7 +26,7 @@ test('converts string expressions to subroutines', (t): void => {
   t.deepEqual(createQuery(denormalizedQuery), query);
 });
 
-test('concatenates pipe separated subroutines with the sibling subroutines', (t): void => {
+test('concatenates pipe separated subroutines with the sibling subroutines', (t) => {
   const denormalizedQuery = [
     'foo0 | foo1 | foo2',
     'bar'
@@ -54,7 +54,7 @@ test('concatenates pipe separated subroutines with the sibling subroutines', (t)
   t.deepEqual(createQuery(denormalizedQuery), query);
 });
 
-test('converts simple object command into "adopt" subroutine (string expression)', (t): void => {
+test('converts simple object command into "adopt" subroutine (string expression)', (t) => {
   const denormalizedQuery = [
     'foo',
     'bar',
@@ -94,7 +94,7 @@ test('converts simple object command into "adopt" subroutine (string expression)
   t.deepEqual(createQuery(denormalizedQuery), query);
 });
 
-test('converts simple object command into "adopt" subroutine (string expression) (nested; simple object)', (t): void => {
+test('converts simple object command into "adopt" subroutine (string expression) (nested; simple object)', (t) => {
   const denormalizedQuery = [
     'foo',
     'bar',
@@ -142,7 +142,7 @@ test('converts simple object command into "adopt" subroutine (string expression)
   t.deepEqual(createQuery(denormalizedQuery), query);
 });
 
-test('converts simple object command into "adopt" subroutine (array expression)', (t): void => {
+test('converts simple object command into "adopt" subroutine (array expression)', (t) => {
   const denormalizedQuery = [
     'foo',
     'bar',

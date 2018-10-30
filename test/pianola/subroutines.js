@@ -7,7 +7,7 @@ import pianola, {
   NotFoundError
 } from '../../src';
 
-test('empty instructions return the original input value', (t): void => {
+test('empty instructions return the original input value', (t) => {
   const startValue = {};
 
   const x = pianola({
@@ -17,7 +17,7 @@ test('empty instructions return the original input value', (t): void => {
   t.true(x([], startValue) === startValue);
 });
 
-test('executes a subroutine and returns the subroutine result value', (t): void => {
+test('executes a subroutine and returns the subroutine result value', (t) => {
   const foo = sinon.stub().returns('bar');
 
   const x = pianola({
@@ -31,7 +31,7 @@ test('executes a subroutine and returns the subroutine result value', (t): void 
   t.true(result === 'bar');
 });
 
-test('executes the first subroutine with the input value', (t): void => {
+test('executes the first subroutine with the input value', (t) => {
   const foo = sinon.stub().returns();
 
   const x = pianola({
@@ -46,7 +46,7 @@ test('executes the first subroutine with the input value', (t): void => {
   t.true(foo.calledWith('bar'));
 });
 
-test('executes the next subroutine with the result of the parent subroutine', (t): void => {
+test('executes the next subroutine with the result of the parent subroutine', (t) => {
   const foo = sinon.stub().returns('FOO');
   const bar = sinon.stub();
 
@@ -63,7 +63,7 @@ test('executes the next subroutine with the result of the parent subroutine', (t
   t.true(bar.calledWith('FOO'));
 });
 
-test('short-circuits the subroutine after receiving FinalResultSentinel', (t): void => {
+test('short-circuits the subroutine after receiving FinalResultSentinel', (t) => {
   const foo = sinon.stub().returns(new FinalResultSentinel('FOO'));
   const bar = sinon.stub().throws(new Error());
 
@@ -80,7 +80,7 @@ test('short-circuits the subroutine after receiving FinalResultSentinel', (t): v
   t.true(result === 'FOO');
 });
 
-test('executes a subroutine with a list of the parameter values', (t): void => {
+test('executes a subroutine with a list of the parameter values', (t) => {
   const foo = sinon.stub();
 
   const x = pianola({
@@ -95,7 +95,7 @@ test('executes a subroutine with a list of the parameter values', (t): void => {
   t.true(foo.calledWith('qux', ['bar', 'baz']));
 });
 
-test('executes a subroutine with a user configured bindle', (t): void => {
+test('executes a subroutine with a user configured bindle', (t) => {
   const foo = sinon.stub();
 
   const bindle = {};
@@ -113,7 +113,7 @@ test('executes a subroutine with a user configured bindle', (t): void => {
   t.true(foo.calledWith('qux', [], bindle));
 });
 
-test('executes a subroutine for each value in an array result', (t): void => {
+test('executes a subroutine for each value in an array result', (t) => {
   const foo = sinon.stub().returns([1, 2, 3]);
   const bar = sinon.stub();
 
@@ -133,7 +133,7 @@ test('executes a subroutine for each value in an array result', (t): void => {
   t.deepEqual(result, ['a', 'b', 'c']);
 });
 
-test('names results', (t): void => {
+test('names results', (t) => {
   const foo = sinon.stub().returns('FOO');
 
   const x = pianola({
@@ -160,17 +160,17 @@ test('names results', (t): void => {
   });
 });
 
-test('throws an error if a subroutine does not exist', (t): void => {
+test('throws an error if a subroutine does not exist', (t) => {
   const x = pianola({
     subroutines: {}
   });
 
-  t.throws((): void => {
+  t.throws(() => {
     x('foo', null);
   }, NotFoundError);
 });
 
-test('calls handleResult for each intermediate result', (t): void => {
+test('calls handleResult for each intermediate result', (t) => {
   const handleResult = sinon.stub();
   const foo = sinon.stub().returns('FOO');
 
@@ -202,7 +202,7 @@ test('calls handleResult for each intermediate result', (t): void => {
   t.true(result === 'FOO');
 });
 
-test('names results when instruction is a {[key: string]: [pianola expression]}', (t): void => {
+test('names results when instruction is a {[key: string]: [pianola expression]}', (t) => {
   const foo = sinon.stub().returns('foo');
 
   const x = pianola({

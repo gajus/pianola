@@ -3,7 +3,7 @@
 import test from 'ava';
 import parseExpression from '../../../src/parsers/parseExpression';
 
-test('parses an expression of a single subroutine', (t): void => {
+test('parses an expression of a single subroutine', (t) => {
   t.deepEqual(parseExpression('foo'), [
     {
       subroutine: 'foo',
@@ -12,7 +12,7 @@ test('parses an expression of a single subroutine', (t): void => {
   ]);
 });
 
-test('parses an expression of a single subroutine with multiple values', (t): void => {
+test('parses an expression of a single subroutine with multiple values', (t) => {
   t.deepEqual(parseExpression('foo bar baz'), [
     {
       subroutine: 'foo',
@@ -24,7 +24,7 @@ test('parses an expression of a single subroutine with multiple values', (t): vo
   ]);
 });
 
-test('parses an expression of multiple subroutines combined using the pipe operator', (t): void => {
+test('parses an expression of multiple subroutines combined using the pipe operator', (t) => {
   t.deepEqual(parseExpression('foo | bar'), [
     {
       subroutine: 'foo',
@@ -37,7 +37,7 @@ test('parses an expression of multiple subroutines combined using the pipe opera
   ]);
 });
 
-test('parses an expression of multiple subroutines (with values) combined using the pipe operator', (t): void => {
+test('parses an expression of multiple subroutines (with values) combined using the pipe operator', (t) => {
   t.deepEqual(parseExpression('foo a0 b0 c0 | bar a1 b1 c1'), [
     {
       subroutine: 'foo',
@@ -58,7 +58,7 @@ test('parses an expression of multiple subroutines (with values) combined using 
   ]);
 });
 
-test('parses an expression of a single subroutine with escaped values', (t): void => {
+test('parses an expression of a single subroutine with escaped values', (t) => {
   t.deepEqual(parseExpression('foo a \'b\' "c"'), [
     {
       subroutine: 'foo',
@@ -71,7 +71,7 @@ test('parses an expression of a single subroutine with escaped values', (t): voi
   ]);
 });
 
-test('parses an expression (foo "a b")', (t): void => {
+test('parses an expression (foo "a b")', (t) => {
   t.deepEqual(parseExpression('foo "a b"'), [
     {
       subroutine: 'foo',
@@ -83,7 +83,7 @@ test('parses an expression (foo "a b")', (t): void => {
 });
 
 // eslint-disable-next-line ava/no-skip-test
-test.skip('parses an expression (foo "a b)', (t): void => {
+test.skip('parses an expression (foo "a b)', (t) => {
   t.deepEqual(parseExpression('foo "a b'), [
     {
       subroutine: 'foo',
@@ -96,7 +96,7 @@ test.skip('parses an expression (foo "a b)', (t): void => {
 });
 
 // eslint-disable-next-line ava/no-skip-test
-test.skip('parses an expression (foo a b")', (t): void => {
+test.skip('parses an expression (foo a b")', (t) => {
   t.deepEqual(parseExpression('foo a b"'), [
     {
       subroutine: 'foo',
@@ -108,7 +108,7 @@ test.skip('parses an expression (foo a b")', (t): void => {
   ]);
 });
 
-test('parses an expression (foo \'a b\')', (t): void => {
+test('parses an expression (foo \'a b\')', (t) => {
   t.deepEqual(parseExpression('foo \'a b\''), [
     {
       subroutine: 'foo',
@@ -120,7 +120,7 @@ test('parses an expression (foo \'a b\')', (t): void => {
 });
 
 // eslint-disable-next-line ava/no-skip-test
-test.skip('parses an expression (foo \'a b)', (t): void => {
+test.skip('parses an expression (foo \'a b)', (t) => {
   t.deepEqual(parseExpression('foo \'a b'), [
     {
       subroutine: 'foo',
@@ -133,7 +133,7 @@ test.skip('parses an expression (foo \'a b)', (t): void => {
 });
 
 // eslint-disable-next-line ava/no-skip-test
-test.skip('parses an expression (foo a b\')', (t): void => {
+test.skip('parses an expression (foo a b\')', (t) => {
   t.deepEqual(parseExpression('foo a b\''), [
     {
       subroutine: 'foo',
@@ -145,7 +145,7 @@ test.skip('parses an expression (foo a b\')', (t): void => {
   ]);
 });
 
-test('parses an expression (foo a b)', (t): void => {
+test('parses an expression (foo a b)', (t) => {
   t.deepEqual(parseExpression('foo a b'), [
     {
       subroutine: 'foo',
@@ -157,7 +157,7 @@ test('parses an expression (foo a b)', (t): void => {
   ]);
 });
 
-test('parses an expression (foo "a" \'b\')', (t): void => {
+test('parses an expression (foo "a" \'b\')', (t) => {
   t.deepEqual(parseExpression('foo "a" \'b\''), [
     {
       subroutine: 'foo',
