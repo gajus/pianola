@@ -223,3 +223,23 @@ test('names results when instruction is a {[key: string]: [pianola expression]}'
     b: 'foo'
   }, result);
 });
+
+test('throws an error when there is an instruction after a named result', (t) => {
+  const foo = sinon.stub().returns('foo');
+
+  const x = pianola({
+    subroutines: {
+      foo
+    }
+  });
+
+  t.throws(() => {
+    x([
+      {
+        a: 'foo',
+        b: 'foo'
+      },
+      'foo'
+    ], 'qux');
+  }, 'Instructions after a query children expression are ignored.');
+});

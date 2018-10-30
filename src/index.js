@@ -25,6 +25,18 @@ class FinalResultSentinel {
 const play = (instructions, startValue, subroutines, bindle: Object, handleResult?: Function) => {
   let result = startValue;
 
+  let foundQueryChildExpression = false;
+
+  for (const instruction of instructions) {
+    if (foundQueryChildExpression) {
+      throw new Error('Instructions after a query children expression are ignored.');
+    }
+
+    if (instruction.children) {
+      foundQueryChildExpression = true
+    }
+  }
+
   let index = 0;
 
   for (const instruction of instructions) {
