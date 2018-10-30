@@ -25,21 +25,11 @@ class FinalResultSentinel {
 const play = (instructions, startValue, subroutines, bindle: Object, handleResult?: Function) => {
   let result = startValue;
 
-  let foundQueryChildExpression = false;
-
-  for (const instruction of instructions) {
-    if (foundQueryChildExpression) {
-      throw new Error('Instructions after a query children expression are ignored.');
-    }
-
-    if (instruction.children) {
-      foundQueryChildExpression = true
-    }
-  }
-
   let index = 0;
 
   for (const instruction of instructions) {
+    index++;
+
     if (instruction.children) {
       const children = {};
 
@@ -49,7 +39,9 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
         children[childName] = play(instruction.children[childName], result, subroutines, bindle, handleResult);
       }
 
-      return children;
+      const remainingInstructions = instructions.slice(index);
+
+      return play(remainingInstructions, children, subroutines, bindle, handleResult);
     }
 
     const lastResult = result;
@@ -71,8 +63,6 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
         return handleResultResult.value;
       }
     }
-
-    index++;
 
     if (Array.isArray(result)) {
       const remainingInstructions = instructions.slice(index);
