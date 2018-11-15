@@ -1,14 +1,16 @@
 // @flow
 
-type QueryChildrenType = {
+/* eslint-disable no-use-before-define, import/exports-last */
 
-  // eslint-disable-next-line no-use-before-define
-  [key: string]: DenormalizedQueryType
+type QueryChildrenType = {
+  +[key: string]: DenormalizedQueryType
 };
 
+type QueryInstructionType = string;
+
 export type DenormalizedQueryType =
-  string |
-  $ReadOnlyArray<string | QueryChildrenType> |
+  QueryInstructionType |
+  $ReadOnlyArray<QueryInstructionType | QueryChildrenType> |
   QueryChildrenType;
 
 export type CommandType = {|
@@ -18,35 +20,31 @@ export type CommandType = {|
 
 export type AdoptionType = {|
   children: {
-
-    // eslint-disable-next-line no-use-before-define
-    [key: string]: QueryType
+    +[key: string]: QueryType
   }
 |};
 
 export type QueryType = $ReadOnlyArray<CommandType | AdoptionType>;
 
 // eslint-disable-next-line flowtype/no-weak-types
-export type SubroutineType = (subject: mixed, values: $ReadOnlyArray<string>, bindle: Object) => any;
+type BindleType = Object;
+
+export type SubroutineType = (subject: mixed, values: $ReadOnlyArray<string>, bindle: BindleType) => mixed;
 
 export type ResultHandlerType = (output: mixed, input: mixed) => void;
 
-export type UserConfigurationType = {
-
-  // eslint-disable-next-line flowtype/no-weak-types
-  +bindle?: Object,
+export type UserConfigurationType = {|
+  +bindle?: BindleType,
   +handleResult?: ResultHandlerType,
   +subroutines: {
-    [key: string]: SubroutineType
+    +[key: string]: SubroutineType
   }
-};
+|};
 
 export type ConfigurationType = {|
-
-  // eslint-disable-next-line flowtype/no-weak-types
-  +bindle: Object,
+  +bindle: BindleType,
   +handleResult?: ResultHandlerType,
   +subroutines: {
-    [key: string]: SubroutineType
+    +[key: string]: SubroutineType
   }
 |};
