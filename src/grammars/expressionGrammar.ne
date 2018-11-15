@@ -3,24 +3,27 @@
 %}
 
 subroutines ->
-    subroutines _ "|" _ subroutine {% appendItem(0, 4) %}
+    subroutines __ subroutineOperator __ subroutine {% d => d[0].concat([d[2], d[4]]) %}
   | subroutine
 
 subroutine ->
-    subroutineName " " parameters {% d => ({subroutine: d[0], values: d[2]}) %}
+    subroutineName __ parameters {% d => ({subroutine: d[0], values: d[2]}) %}
   | subroutineName {% d => ({subroutine: d[0], values: []}) %}
 
 subroutineName ->
   [a-zA-Z0-9\-_]:+ {% d => d[0].join('') %}
 
 parameters ->
-    parameters " " parameter {% appendItem(0, 2) %}
+    parameters __ parameter {% appendItem(0, 2) %}
   | parameter
 
 parameter ->
-    [^|"' ]:+ {% d => d[0].join('') %}
+    unquotedstring {% id %}
   | sqstring {% id %}
   | dqstring {% id %}
+
+unquotedstring ->
+  [^|"' ]:+ {% d => d[0].join('') %}
 
 dqstring ->
   "\"" dstrchar:* "\"" {% d => d[1].join('') %}
@@ -38,3 +41,10 @@ sstrchar ->
 
 _ ->
   [ ]:* {% d => null %}
+
+__ ->
+  [ ]:+ {% d => null %}
+
+subroutineOperator ->
+    ">|" {% d => ({operator: 'AGGREGATE_PIPELINE'}) %}
+  | "|" {% d => ({operator: 'PIPELINE'}) %}

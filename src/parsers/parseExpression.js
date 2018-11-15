@@ -8,10 +8,10 @@ import {
   PianolaError
 } from '../errors';
 import type {
-  CommandType
+  InstructionType
 } from '../types';
 
-export default (expression: string): $ReadOnlyArray<CommandType> => {
+export default (expression: string): $ReadOnlyArray<InstructionType> => {
   const parser = new Parser(expressionGrammar.ParserRules, expressionGrammar.ParserStart);
 
   const results = parser.feed(expression).results;

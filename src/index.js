@@ -10,6 +10,7 @@ import {
 } from './errors';
 import type {
   DenormalizedQueryType,
+  OperatorType,
   UserConfigurationType
 } from './types';
 
@@ -21,7 +22,7 @@ class FinalResultSentinel {
   }
 }
 
-// eslint-disable-next-line flowtype/no-weak-types
+// eslint-disable-next-line complexity, flowtype/no-weak-types
 const play = (instructions, startValue, subroutines, bindle: Object, handleResult?: Function) => {
   let result = startValue;
 
@@ -29,6 +30,13 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
 
   for (const instruction of instructions) {
     index++;
+
+    if (instruction.operator) {
+      // eslint-disable-next-line no-continue
+      continue;
+    }
+
+    const nextOperator: OperatorType | null = instructions[index] && instructions[index].operator || null;
 
     if (instruction.children) {
       const children = {};
@@ -64,7 +72,7 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
       }
     }
 
-    if (Array.isArray(result)) {
+    if (Array.isArray(result) && nextOperator === 'PIPELINE') {
       const remainingInstructions = instructions.slice(index);
 
       return result.map((newStartValue) => {

@@ -18,6 +18,9 @@ test('converts string expressions to subroutines', (t) => {
       values: []
     },
     {
+      operator: 'PIPELINE'
+    },
+    {
       subroutine: 'bar',
       values: []
     }
@@ -38,12 +41,21 @@ test('concatenates pipe separated subroutines with the sibling subroutines', (t)
       values: []
     },
     {
+      operator: 'PIPELINE'
+    },
+    {
       subroutine: 'foo1',
       values: []
     },
     {
+      operator: 'PIPELINE'
+    },
+    {
       subroutine: 'foo2',
       values: []
+    },
+    {
+      operator: 'PIPELINE'
     },
     {
       subroutine: 'bar',
@@ -70,8 +82,14 @@ test('converts simple object command into "adopt" subroutine (string expression)
       values: []
     },
     {
+      operator: 'PIPELINE'
+    },
+    {
       subroutine: 'bar',
       values: []
+    },
+    {
+      operator: 'PIPELINE'
     },
     {
       children: {
@@ -112,8 +130,14 @@ test('converts simple object command into "adopt" subroutine (string expression)
       values: []
     },
     {
+      operator: 'PIPELINE'
+    },
+    {
       subroutine: 'bar',
       values: []
+    },
+    {
+      operator: 'PIPELINE'
     },
     {
       children: {
@@ -162,8 +186,14 @@ test('converts simple object command into "adopt" subroutine (array expression)'
       values: []
     },
     {
+      operator: 'PIPELINE'
+    },
+    {
       subroutine: 'bar',
       values: []
+    },
+    {
+      operator: 'PIPELINE'
     },
     {
       children: {

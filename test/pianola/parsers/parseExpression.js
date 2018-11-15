@@ -24,11 +24,30 @@ test('parses an expression of a single subroutine with multiple values', (t) => 
   ]);
 });
 
-test('parses an expression of multiple subroutines combined using the pipe operator', (t) => {
+test('parses an expression of multiple subroutines combined using the pipeline (|) operator', (t) => {
   t.deepEqual(parseExpression('foo | bar'), [
     {
       subroutine: 'foo',
       values: []
+    },
+    {
+      operator: 'PIPELINE'
+    },
+    {
+      subroutine: 'bar',
+      values: []
+    }
+  ]);
+});
+
+test('parses an expression of multiple subroutines combined using the aggregate pipeline (>|) operator', (t) => {
+  t.deepEqual(parseExpression('foo >| bar'), [
+    {
+      subroutine: 'foo',
+      values: []
+    },
+    {
+      operator: 'AGGREGATE_PIPELINE'
     },
     {
       subroutine: 'bar',
@@ -46,6 +65,9 @@ test('parses an expression of multiple subroutines (with values) combined using 
         'b0',
         'c0'
       ]
+    },
+    {
+      operator: 'PIPELINE'
     },
     {
       subroutine: 'bar',

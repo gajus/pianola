@@ -18,12 +18,24 @@ const createQuery = (denormalizedQuery: DenormalizedQueryType): QueryType => {
 
   const commands = [];
 
+  let index = 0;
+
   for (const maybeExpression of denormalizedQuery) {
+    index++;
+
+    const nextExpression = denormalizedQuery[index];
+
     if (typeof maybeExpression === 'string') {
       const expressionCommands = parseExpression(maybeExpression);
 
       for (const command of expressionCommands) {
         commands.push(command);
+      }
+
+      if (nextExpression) {
+        commands.push({
+          operator: 'PIPELINE'
+        });
       }
     } else {
       const adoption = maybeExpression;

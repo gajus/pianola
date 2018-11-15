@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import pianola, {
   FinalResultSentinel,
   NotFoundError
-} from '../../src';
+} from '../../../src';
 
 test('empty instructions return the original input value', (t) => {
   const startValue = {};
@@ -44,23 +44,6 @@ test('executes the first subroutine with the input value', (t) => {
 
   t.true(foo.calledOnce);
   t.true(foo.calledWith('bar'));
-});
-
-test('executes the next subroutine with the result of the parent subroutine', (t) => {
-  const foo = sinon.stub().returns('FOO');
-  const bar = sinon.stub();
-
-  const x = pianola({
-    subroutines: {
-      bar,
-      foo
-    }
-  });
-
-  x('foo | bar', null);
-
-  t.true(bar.calledOnce);
-  t.true(bar.calledWith('FOO'));
 });
 
 test('short-circuits the subroutine after receiving FinalResultSentinel', (t) => {
@@ -113,53 +96,6 @@ test('executes a subroutine with a user configured bindle', (t) => {
   t.true(foo.calledWith('qux', [], bindle));
 });
 
-test('executes a subroutine for each value in an array result', (t) => {
-  const foo = sinon.stub().returns([1, 2, 3]);
-  const bar = sinon.stub();
-
-  bar.onCall(0).returns('a');
-  bar.onCall(1).returns('b');
-  bar.onCall(2).returns('c');
-
-  const x = pianola({
-    subroutines: {
-      bar,
-      foo
-    }
-  });
-
-  const result = x('foo | bar', 'qux');
-
-  t.deepEqual(result, ['a', 'b', 'c']);
-});
-
-test('names results', (t) => {
-  const foo = sinon.stub().returns('FOO');
-
-  const x = pianola({
-    subroutines: {
-      foo
-    }
-  });
-
-  const result = x([
-    {
-      foo0: 'foo',
-      foo1: 'foo',
-      foo2: 'foo'
-    }
-  ], 'qux');
-
-  t.true(foo.callCount === 3);
-  t.true(foo.calledWith('qux'));
-
-  t.deepEqual(result, {
-    foo0: 'FOO',
-    foo1: 'FOO',
-    foo2: 'FOO'
-  });
-});
-
 test('throws an error if a subroutine does not exist', (t) => {
   const x = pianola({
     subroutines: {}
@@ -200,46 +136,4 @@ test('calls handleResult for each intermediate result', (t) => {
   ]);
 
   t.true(result === 'FOO');
-});
-
-test('names results when instruction is a {[key: string]: [pianola expression]}', (t) => {
-  const foo = sinon.stub().returns('foo');
-
-  const x = pianola({
-    subroutines: {
-      foo
-    }
-  });
-
-  const result = x([
-    {
-      a: 'foo',
-      b: 'foo'
-    }
-  ], 'qux');
-
-  t.deepEqual({
-    a: 'foo',
-    b: 'foo'
-  }, result);
-});
-
-test('uses instruction after query children expression', (t) => {
-  const foo = sinon.stub().returns('foo');
-
-  const x = pianola({
-    subroutines: {
-      foo
-    }
-  });
-
-  const result = x([
-    {
-      a: 'foo',
-      b: 'foo'
-    },
-    'foo'
-  ], 'qux');
-
-  t.true(result === 'foo');
 });

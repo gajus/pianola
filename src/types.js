@@ -8,23 +8,34 @@ type QueryChildrenType = {
 
 type QueryInstructionType = string;
 
+export type OperatorType = 'PIPELINE' | 'AGGREGATE_PIPELINE';
+
 export type DenormalizedQueryType =
   QueryInstructionType |
   $ReadOnlyArray<QueryInstructionType | QueryChildrenType> |
   QueryChildrenType;
 
-export type CommandType = {|
+export type SubroutineInstructionType = {|
   +subroutine: string,
   +values: $ReadOnlyArray<string>
 |};
 
-export type AdoptionType = {|
-  children: {
+export type OperatorInstructionType = {|
+  +operator: OperatorType
+|};
+
+export type AdoptionInstructionType = {|
+  +children: {
     +[key: string]: QueryType
   }
 |};
 
-export type QueryType = $ReadOnlyArray<CommandType | AdoptionType>;
+export type InstructionType =
+  AdoptionInstructionType |
+  SubroutineInstructionType |
+  OperatorInstructionType;
+
+export type QueryType = $ReadOnlyArray<InstructionType>;
 
 // eslint-disable-next-line flowtype/no-weak-types
 type BindleType = Object;

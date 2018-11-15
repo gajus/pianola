@@ -15,7 +15,8 @@ A declarative function composition and evaluation engine.
 * [Sentinels](#sentinels)
   * [`FinalResultSentinel`](#finalresultsentinel)
 * [Expression reference](#expression-reference)
-  * [The pipe operator (`|`)](#the-pipe-operator-)
+  * [The pipeline operator (`|`)](#the-pipeline-operator-)
+  * [The aggregate pipeline operator (`>|`)](#the-aggregate-pipeline-operator-)
 * [Cookbook](#cookbook)
   * [Map multiple results](#map-multiple-results)
   * [Name results](#name-results)
@@ -24,7 +25,7 @@ A declarative function composition and evaluation engine.
 
 ## Use cases
 
-* [Surgeon](https://github.com/gajus/surgeon) uses Pianola to extract information from an HTML document using a declarative API.
+* [Surgeon](https://github.com/gajus/surgeon) uses Pianola to extract information from HTML documents using a declarative API.
 
 ## Configuration
 
@@ -45,7 +46,8 @@ x('foo | bar baz', 'qux');
 
 In the above example, Pianola expression uses two subroutines: `foo` and `bar`.
 
-`foo` subroutine is invoked without additional values. `bar` subroutine is executed with 1 value ("baz").
+* `foo` subroutine is invoked without values.
+* `bar` subroutine is executed with 1 value ("baz").
 
 Subroutines are executed in the order in which they are defined – the result of the last subroutine is passed on to the next one. The first subroutine receives the value used to start the evaluator.
 
@@ -136,7 +138,8 @@ An expression is defined using the following pseudo-grammar:
 
 ```
 subroutines ->
-    subroutines _ "|" _ subroutine
+    subroutines _ ">|" _ subroutine
+  | subroutines _ "|" _ subroutine
   | subroutine
 
 subroutine ->
@@ -159,7 +162,11 @@ x('foo bar baz', 'qux');
 
 ```
 
-In this example, Pianola expression evaluator (`x`) is invoked with `foo bar baz` expression and `qux` starting value. The expression tells the expression evaluator to run `foo` subroutine with parameter values "bar" and "baz". The expression evaluator runs `foo` subroutine with parameter values "bar" and "baz" and a subject value "qux".
+In this example,
+
+* Pianola expression evaluator (`x`) is invoked with `foo bar baz` expression and `qux` starting value.
+* The expression tells the expression evaluator to run `foo` subroutine with parameter values "bar" and "baz".
+* The expression evaluator runs `foo` subroutine with parameter values "bar" and "baz" and a subject value "qux".
 
 Multiple subroutines can be combined using an array:
 
@@ -171,15 +178,21 @@ x([
 
 ```
 
-In this example, Pianola expression evaluator (`x`) is invoked with two expressions (`foo bar baz` and `corge grault garply`). The first subroutine is executed with the subject value "qux". The second subroutine is executed with a value that is the result of the parent subroutine.
+In this example,
+
+* Pianola expression evaluator (`x`) is invoked with two expressions (`foo bar baz` and `corge grault garply`).
+* The first subroutine is executed with the subject value "qux".
+* The second subroutine is executed with a value that is the result of the parent subroutine.
 
 The result of the query is the result of the last subroutine.
 
 Read [define subroutines](#define-subroutines) documentation for broader explanation of the role of the parameter values and the subject value.
 
-### The pipe operator (`|`)
+### The pipeline operator (`|`)
 
-Multiple subroutines can be combined using the pipe operator.
+Multiple subroutines can be combined using the pipeline operator (`|`).
+
+The pipeline operator tells expression evaluator to pass the result of the previous subroutine to the next subroutine. If the subroutine on the left-hand side returns an array, then the receiving subroutine is called for every value in the array.
 
 The following examples are equivalent:
 
@@ -194,6 +207,19 @@ x([
 ]);
 
 x('foo bar baz | foo bar baz');
+
+```
+
+### The aggregate pipeline operator (`>|`)
+
+Multiple subroutines can be combined using the aggregate pipeline operator (`>|`).
+
+The pipeline operator tells expression evaluator to pass the result of the previous subroutine to the next subroutine. If the subroutine on the left-hand side returns an array, then the receiving subroutine is called with an array of values.
+
+The following examples are equivalent:
+
+```js
+x('foo >| bar');
 
 ```
 
@@ -306,3 +332,5 @@ Pianola throws the following errors to indicate a predictable error state. All P
 This package is using [`roarr`](https://www.npmjs.com/package/roarr) logger to log the program's state.
 
 Export `ROARR_LOG=true` environment variable to enable log printing to stdout.
+
+Use [`roarr-cli`](https://github.com/gajus/roarr-cli) program to pretty-print the logs.
