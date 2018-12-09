@@ -37,6 +37,12 @@ const createQuery = (denormalizedQuery: DenormalizedQueryType): QueryType => {
           operator: 'PIPELINE'
         });
       }
+    } else if (Array.isArray(maybeExpression)) {
+      const children = createQuery(maybeExpression);
+
+      commands.push({
+        margeChildren: children
+      });
     } else {
       const adoption = maybeExpression;
 
@@ -49,7 +55,7 @@ const createQuery = (denormalizedQuery: DenormalizedQueryType): QueryType => {
       }
 
       commands.push({
-        children
+        namedChildren: children
       });
     }
   }

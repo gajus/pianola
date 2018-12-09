@@ -38,18 +38,26 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
 
     const nextOperator: OperatorType | null = instructions[index] && instructions[index].operator || null;
 
-    if (instruction.children) {
+    if (instruction.namedChildren) {
       const children = {};
 
-      const childrenNames = Object.keys(instruction.children);
+      const childrenNames = Object.keys(instruction.namedChildren);
 
       for (const childName of childrenNames) {
-        children[childName] = play(instruction.children[childName], result, subroutines, bindle, handleResult);
+        children[childName] = play(instruction.namedChildren[childName], result, subroutines, bindle, handleResult);
       }
 
       const remainingInstructions = instructions.slice(index);
 
-      return play(remainingInstructions, children['0'] ? children['0'] : children, subroutines, bindle, handleResult);
+      return play(remainingInstructions, children, subroutines, bindle, handleResult);
+    } else if (instruction.margeChildren) {
+      let value = result;
+
+      value = play(instruction.margeChildren, value, subroutines, bindle, handleResult);
+
+      const remainingInstructions = instructions.slice(index);
+
+      return play(remainingInstructions, value, subroutines, bindle, handleResult);
     }
 
     const lastResult = result;

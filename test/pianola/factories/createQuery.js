@@ -92,7 +92,7 @@ test('converts simple object command into "adopt" subroutine (string expression)
       operator: 'PIPELINE'
     },
     {
-      children: {
+      namedChildren: {
         baz: [
           {
             subroutine: 'baz0',
@@ -140,7 +140,7 @@ test('converts simple object command into "adopt" subroutine (string expression)
       operator: 'PIPELINE'
     },
     {
-      children: {
+      namedChildren: {
         baz: [
           {
             subroutine: 'baz',
@@ -149,7 +149,7 @@ test('converts simple object command into "adopt" subroutine (string expression)
         ],
         qux: [
           {
-            children: {
+            namedChildren: {
               quux: [
                 {
                   subroutine: 'quux',
@@ -196,7 +196,7 @@ test('converts simple object command into "adopt" subroutine (array expression)'
       operator: 'PIPELINE'
     },
     {
-      children: {
+      namedChildren: {
         baz: [
           {
             subroutine: 'baz0',

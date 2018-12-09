@@ -12,8 +12,8 @@ export type OperatorType = 'PIPELINE' | 'AGGREGATE_PIPELINE';
 
 export type DenormalizedQueryType =
   QueryInstructionType |
-  $ReadOnlyArray<QueryInstructionType | QueryChildrenType> |
-  QueryChildrenType;
+  QueryChildrenType |
+  $ReadOnlyArray<DenormalizedQueryType>;
 
 export type SubroutineInstructionType = {|
   +subroutine: string,
@@ -24,14 +24,19 @@ export type OperatorInstructionType = {|
   +operator: OperatorType
 |};
 
-export type AdoptionInstructionType = {|
-  +children: {
+export type MergeAdoptionInstructionType = {|
+  +margeChildren: QueryType
+|};
+
+export type NamedAdoptionInstructionType = {|
+  +namedChildren: {
     +[key: string]: QueryType
   }
 |};
 
 export type InstructionType =
-  AdoptionInstructionType |
+  MergeAdoptionInstructionType |
+  NamedAdoptionInstructionType |
   SubroutineInstructionType |
   OperatorInstructionType;
 
