@@ -72,3 +72,28 @@ test('uses instruction after query children expression (array)', (t) => {
 
   t.true(result === 'bar');
 });
+
+test('uses instruction after query children expression (nested arrays)', (t) => {
+  const foo = sinon.stub().returns('bar');
+
+  const x = pianola({
+    subroutines: {
+      foo
+    }
+  });
+
+  const result = x([
+    [
+      [
+        'foo'
+      ],
+      'foo'
+    ],
+    'foo'
+  ], 'qux');
+
+  t.true(foo.args[1][0] === 'bar');
+  t.true(foo.args[2][0] === 'bar');
+
+  t.true(result === 'bar');
+});
