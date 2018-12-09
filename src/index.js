@@ -49,7 +49,7 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
 
       const remainingInstructions = instructions.slice(index);
 
-      return play(remainingInstructions, children, subroutines, bindle, handleResult);
+      return play(remainingInstructions, children['0'] ? children['0'] : children, subroutines, bindle, handleResult);
     }
 
     const lastResult = result;
