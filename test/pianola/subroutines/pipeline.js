@@ -3,7 +3,7 @@
 import test from 'ava';
 import sinon from 'sinon';
 import pianola, {
-  FinalResultSentinel
+  FinalResultSentinel,
 } from '../../../src';
 
 test('executes the next subroutine with the result of the parent subroutine', (t) => {
@@ -13,8 +13,8 @@ test('executes the next subroutine with the result of the parent subroutine', (t
   const x = pianola({
     subroutines: {
       bar,
-      foo
-    }
+      foo,
+    },
   });
 
   x('foo | bar', null);
@@ -30,8 +30,8 @@ test('short-circuits the subroutine after receiving FinalResultSentinel', (t) =>
   const x = pianola({
     subroutines: {
       bar,
-      foo
-    }
+      foo,
+    },
   });
 
   const result = x('foo | bar', null);
@@ -51,8 +51,8 @@ test('executes a subroutine for each value in an array result', (t) => {
   const x = pianola({
     subroutines: {
       bar,
-      foo
-    }
+      foo,
+    },
   });
 
   const result = x('foo | bar', 'qux');
@@ -67,8 +67,8 @@ test('calls handleResult for each intermediate result', (t) => {
   const x = pianola({
     handleResult,
     subroutines: {
-      foo
-    }
+      foo,
+    },
   });
 
   const result = x('foo | foo | foo', 'qux');
@@ -77,16 +77,16 @@ test('calls handleResult for each intermediate result', (t) => {
   t.deepEqual(handleResult.args, [
     [
       'FOO',
-      'qux'
+      'qux',
     ],
     [
       'FOO',
-      'FOO'
+      'FOO',
     ],
     [
       'FOO',
-      'FOO'
-    ]
+      'FOO',
+    ],
   ]);
 
   t.true(result === 'FOO');

@@ -2,7 +2,7 @@
 
 import test from 'ava';
 import {
-  assertValidDenormalizedQuery
+  assertValidDenormalizedQuery,
 } from '../../../src/assertions';
 
 test('throws an error when invalid query is provided', (t) => {

@@ -7,8 +7,8 @@ test('parses an expression of a single subroutine', (t) => {
   t.deepEqual(parseExpression('foo'), [
     {
       subroutine: 'foo',
-      values: []
-    }
+      values: [],
+    },
   ]);
 });
 
@@ -18,9 +18,9 @@ test('parses an expression of a single subroutine with multiple values', (t) => 
       subroutine: 'foo',
       values: [
         'bar',
-        'baz'
-      ]
-    }
+        'baz',
+      ],
+    },
   ]);
 });
 
@@ -28,15 +28,15 @@ test('parses an expression of multiple subroutines combined using the pipeline (
   t.deepEqual(parseExpression('foo | bar'), [
     {
       subroutine: 'foo',
-      values: []
+      values: [],
     },
     {
-      operator: 'PIPELINE'
+      operator: 'PIPELINE',
     },
     {
       subroutine: 'bar',
-      values: []
-    }
+      values: [],
+    },
   ]);
 });
 
@@ -44,15 +44,15 @@ test('parses an expression of multiple subroutines combined using the aggregate 
   t.deepEqual(parseExpression('foo >| bar'), [
     {
       subroutine: 'foo',
-      values: []
+      values: [],
     },
     {
-      operator: 'AGGREGATE_PIPELINE'
+      operator: 'AGGREGATE_PIPELINE',
     },
     {
       subroutine: 'bar',
-      values: []
-    }
+      values: [],
+    },
   ]);
 });
 
@@ -63,20 +63,20 @@ test('parses an expression of multiple subroutines (with values) combined using 
       values: [
         'a0',
         'b0',
-        'c0'
-      ]
+        'c0',
+      ],
     },
     {
-      operator: 'PIPELINE'
+      operator: 'PIPELINE',
     },
     {
       subroutine: 'bar',
       values: [
         'a1',
         'b1',
-        'c1'
-      ]
-    }
+        'c1',
+      ],
+    },
   ]);
 });
 
@@ -87,9 +87,9 @@ test('parses an expression of a single subroutine with escaped values', (t) => {
       values: [
         'a',
         'b',
-        'c'
-      ]
-    }
+        'c',
+      ],
+    },
   ]);
 });
 
@@ -98,9 +98,9 @@ test('parses an expression (foo "a b")', (t) => {
     {
       subroutine: 'foo',
       values: [
-        'a b'
-      ]
-    }
+        'a b',
+      ],
+    },
   ]);
 });
 
@@ -111,9 +111,9 @@ test.skip('parses an expression (foo "a b)', (t) => {
       subroutine: 'foo',
       values: [
         '"a',
-        'b'
-      ]
-    }
+        'b',
+      ],
+    },
   ]);
 });
 
@@ -124,9 +124,9 @@ test.skip('parses an expression (foo a b")', (t) => {
       subroutine: 'foo',
       values: [
         'a',
-        'b"'
-      ]
-    }
+        'b"',
+      ],
+    },
   ]);
 });
 
@@ -135,9 +135,9 @@ test('parses an expression (foo \'a b\')', (t) => {
     {
       subroutine: 'foo',
       values: [
-        'a b'
-      ]
-    }
+        'a b',
+      ],
+    },
   ]);
 });
 
@@ -148,9 +148,9 @@ test.skip('parses an expression (foo \'a b)', (t) => {
       subroutine: 'foo',
       values: [
         '\'a',
-        'b'
-      ]
-    }
+        'b',
+      ],
+    },
   ]);
 });
 
@@ -161,9 +161,9 @@ test.skip('parses an expression (foo a b\')', (t) => {
       subroutine: 'foo',
       values: [
         'a',
-        'b\''
-      ]
-    }
+        'b\'',
+      ],
+    },
   ]);
 });
 
@@ -173,9 +173,9 @@ test('parses an expression (foo a b)', (t) => {
       subroutine: 'foo',
       values: [
         'a',
-        'b'
-      ]
-    }
+        'b',
+      ],
+    },
   ]);
 });
 
@@ -185,8 +185,8 @@ test('parses an expression (foo "a" \'b\')', (t) => {
       subroutine: 'foo',
       values: [
         'a',
-        'b'
-      ]
-    }
+        'b',
+      ],
+    },
   ]);
 });

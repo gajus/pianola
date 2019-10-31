@@ -3,27 +3,27 @@
 import test from 'ava';
 import createQuery from '../../../src/factories/createQuery';
 import type {
-  QueryType
+  QueryType,
 } from '../../../src/types';
 
 test('converts string expressions to subroutines', (t) => {
   const denormalizedQuery = [
     'foo',
-    'bar'
+    'bar',
   ];
 
   const query: QueryType = [
     {
       subroutine: 'foo',
-      values: []
+      values: [],
     },
     {
-      operator: 'PIPELINE'
+      operator: 'PIPELINE',
     },
     {
       subroutine: 'bar',
-      values: []
-    }
+      values: [],
+    },
   ];
 
   t.deepEqual(createQuery(denormalizedQuery), query);
@@ -32,35 +32,35 @@ test('converts string expressions to subroutines', (t) => {
 test('concatenates pipe separated subroutines with the sibling subroutines', (t) => {
   const denormalizedQuery = [
     'foo0 | foo1 | foo2',
-    'bar'
+    'bar',
   ];
 
   const query = [
     {
       subroutine: 'foo0',
-      values: []
+      values: [],
     },
     {
-      operator: 'PIPELINE'
+      operator: 'PIPELINE',
     },
     {
       subroutine: 'foo1',
-      values: []
+      values: [],
     },
     {
-      operator: 'PIPELINE'
+      operator: 'PIPELINE',
     },
     {
       subroutine: 'foo2',
-      values: []
+      values: [],
     },
     {
-      operator: 'PIPELINE'
+      operator: 'PIPELINE',
     },
     {
       subroutine: 'bar',
-      values: []
-    }
+      values: [],
+    },
   ];
 
   t.deepEqual(createQuery(denormalizedQuery), query);
@@ -72,41 +72,41 @@ test('converts simple object command into "adopt" subroutine (string expression)
     'bar',
     {
       baz: 'baz0',
-      qux: 'qux0'
-    }
+      qux: 'qux0',
+    },
   ];
 
   const query: QueryType = [
     {
       subroutine: 'foo',
-      values: []
+      values: [],
     },
     {
-      operator: 'PIPELINE'
+      operator: 'PIPELINE',
     },
     {
       subroutine: 'bar',
-      values: []
+      values: [],
     },
     {
-      operator: 'PIPELINE'
+      operator: 'PIPELINE',
     },
     {
       namedChildren: {
         baz: [
           {
             subroutine: 'baz0',
-            values: []
-          }
+            values: [],
+          },
         ],
         qux: [
           {
             subroutine: 'qux0',
-            values: []
-          }
-        ]
-      }
-    }
+            values: [],
+          },
+        ],
+      },
+    },
   ];
 
   t.deepEqual(createQuery(denormalizedQuery), query);
@@ -119,33 +119,33 @@ test('converts simple object command into "adopt" subroutine (string expression)
     {
       baz: 'baz',
       qux: {
-        quux: 'quux'
-      }
-    }
+        quux: 'quux',
+      },
+    },
   ];
 
   const query: QueryType = [
     {
       subroutine: 'foo',
-      values: []
+      values: [],
     },
     {
-      operator: 'PIPELINE'
+      operator: 'PIPELINE',
     },
     {
       subroutine: 'bar',
-      values: []
+      values: [],
     },
     {
-      operator: 'PIPELINE'
+      operator: 'PIPELINE',
     },
     {
       namedChildren: {
         baz: [
           {
             subroutine: 'baz',
-            values: []
-          }
+            values: [],
+          },
         ],
         qux: [
           {
@@ -153,14 +153,14 @@ test('converts simple object command into "adopt" subroutine (string expression)
               quux: [
                 {
                   subroutine: 'quux',
-                  values: []
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
+                  values: [],
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
   ];
 
   t.deepEqual(createQuery(denormalizedQuery), query);
@@ -172,45 +172,45 @@ test('converts simple object command into "adopt" subroutine (array expression)'
     'bar',
     {
       baz: [
-        'baz0'
+        'baz0',
       ],
       qux: [
-        'qux0'
-      ]
-    }
+        'qux0',
+      ],
+    },
   ];
 
   const query: QueryType = [
     {
       subroutine: 'foo',
-      values: []
+      values: [],
     },
     {
-      operator: 'PIPELINE'
+      operator: 'PIPELINE',
     },
     {
       subroutine: 'bar',
-      values: []
+      values: [],
     },
     {
-      operator: 'PIPELINE'
+      operator: 'PIPELINE',
     },
     {
       namedChildren: {
         baz: [
           {
             subroutine: 'baz0',
-            values: []
-          }
+            values: [],
+          },
         ],
         qux: [
           {
             subroutine: 'qux0',
-            values: []
-          }
-        ]
-      }
-    }
+            values: [],
+          },
+        ],
+      },
+    },
   ];
 
   t.deepEqual(createQuery(denormalizedQuery), query);

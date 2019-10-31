@@ -3,10 +3,10 @@
 import Ajv from 'ajv';
 import denormalizedQueryShema from '../schemas/denormalizedQueryShema.json';
 import {
-  PianolaError
+  PianolaError,
 } from '../errors';
 import type {
-  DenormalizedQueryType
+  DenormalizedQueryType,
 } from '../types';
 
 const ajv = new Ajv();

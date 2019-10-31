@@ -3,7 +3,8 @@
 /* eslint-disable no-use-before-define, import/exports-last */
 
 type QueryChildrenType = {
-  +[key: string]: DenormalizedQueryType
+  +[key: string]: DenormalizedQueryType,
+  ...,
 };
 
 type QueryInstructionType = string;
@@ -17,21 +18,22 @@ export type DenormalizedQueryType =
 
 export type SubroutineInstructionType = {|
   +subroutine: string,
-  +values: $ReadOnlyArray<string>
+  +values: $ReadOnlyArray<string>,
 |};
 
 export type OperatorInstructionType = {|
-  +operator: OperatorType
+  +operator: OperatorType,
 |};
 
 export type MergeAdoptionInstructionType = {|
-  +margeChildren: QueryType
+  +margeChildren: QueryType,
 |};
 
 export type NamedAdoptionInstructionType = {|
   +namedChildren: {
-    +[key: string]: QueryType
-  }
+    +[key: string]: QueryType,
+    ...,
+  },
 |};
 
 export type InstructionType =
@@ -45,22 +47,26 @@ export type QueryType = $ReadOnlyArray<InstructionType>;
 // eslint-disable-next-line flowtype/no-weak-types
 type BindleType = Object;
 
-export type SubroutineType = (subject: mixed, values: $ReadOnlyArray<string>, bindle: BindleType) => mixed;
+// eslint-disable-next-line flowtype/no-weak-types
+export type SubroutineType = (subject: any, values: $ReadOnlyArray<string>, bindle: BindleType) => any;
 
-export type ResultHandlerType = (output: mixed, input: mixed) => void;
+// eslint-disable-next-line flowtype/no-weak-types
+export type ResultHandlerType = (output: any, input: any) => void;
 
 export type UserConfigurationType = {|
   +bindle?: BindleType,
   +handleResult?: ResultHandlerType,
   +subroutines: {
-    +[key: string]: SubroutineType
-  }
+    +[key: string]: SubroutineType,
+    ...,
+  },
 |};
 
 export type ConfigurationType = {|
   +bindle: BindleType,
   +handleResult?: ResultHandlerType,
   +subroutines: {
-    +[key: string]: SubroutineType
-  }
+    +[key: string]: SubroutineType,
+    ...,
+  },
 |};

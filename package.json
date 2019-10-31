@@ -10,32 +10,32 @@
     ]
   },
   "dependencies": {
-    "ajv": "^6.6.1",
+    "ajv": "^6.10.2",
     "es6-error": "^4.1.1",
-    "nearley": "^2.15.1",
-    "roarr": "^2.11.9"
+    "nearley": "^2.19.0",
+    "roarr": "^2.14.2"
   },
   "description": "A declarative function composition and evaluation engine.",
   "devDependencies": {
-    "@babel/cli": "^7.2.0",
-    "@babel/core": "^7.2.0",
-    "@babel/node": "^7.2.0",
-    "@babel/plugin-transform-flow-strip-types": "^7.2.0",
-    "@babel/preset-env": "^7.2.0",
-    "@babel/register": "^7.0.0",
-    "@babel/types": "^7.2.0",
-    "ava": "^1.0.0-rc.2",
-    "babel-plugin-istanbul": "^5.1.0",
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/plugin-transform-flow-strip-types": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/register": "^7.6.2",
+    "@babel/types": "^7.6.3",
+    "ava": "^2.4.0",
+    "babel-plugin-istanbul": "^5.2.0",
     "babel-plugin-transform-export-default-name": "^2.0.4",
-    "coveralls": "^3.0.2",
-    "eslint": "^5.10.0",
-    "eslint-config-canonical": "^15.0.1",
-    "flow-bin": "^0.87.0",
-    "flow-copy-source": "^2.0.2",
-    "husky": "^1.2.0",
-    "nyc": "^13.1.0",
-    "semantic-release": "^15.12.4",
-    "sinon": "^7.1.1"
+    "coveralls": "^3.0.7",
+    "eslint": "^6.6.0",
+    "eslint-config-canonical": "^17.7.0",
+    "flow-bin": "^0.111.0",
+    "flow-copy-source": "^2.0.8",
+    "husky": "^3.0.9",
+    "nyc": "^14.1.1",
+    "semantic-release": "^15.13.28",
+    "sinon": "^7.5.0"
   },
   "engines": {
     "node": ">=8"

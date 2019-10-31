@@ -1,18 +1,18 @@
 // @flow
 
 import {
-  parseExpression
+  parseExpression,
 } from '../parsers';
 import type {
   DenormalizedQueryType,
-  QueryType
+  QueryType,
 } from '../types';
 
 const createQuery = (denormalizedQuery: DenormalizedQueryType): QueryType => {
   if (typeof denormalizedQuery === 'string' || !Array.isArray(denormalizedQuery)) {
     // eslint-disable-next-line no-param-reassign
     denormalizedQuery = [
-      denormalizedQuery
+      denormalizedQuery,
     ];
   }
 
@@ -34,14 +34,14 @@ const createQuery = (denormalizedQuery: DenormalizedQueryType): QueryType => {
 
       if (nextExpression) {
         commands.push({
-          operator: 'PIPELINE'
+          operator: 'PIPELINE',
         });
       }
     } else if (Array.isArray(maybeExpression)) {
       const children = createQuery(maybeExpression);
 
       commands.push({
-        margeChildren: children
+        margeChildren: children,
       });
     } else {
       const adoption = maybeExpression;
@@ -55,7 +55,7 @@ const createQuery = (denormalizedQuery: DenormalizedQueryType): QueryType => {
       }
 
       commands.push({
-        namedChildren: children
+        namedChildren: children,
       });
     }
   }

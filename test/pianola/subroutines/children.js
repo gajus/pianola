@@ -9,20 +9,20 @@ test('names results when instruction is a {[key: string]: [pianola expression]}'
 
   const x = pianola({
     subroutines: {
-      foo
-    }
+      foo,
+    },
   });
 
   const result = x([
     {
       a: 'foo',
-      b: 'foo'
-    }
+      b: 'foo',
+    },
   ], 'qux');
 
   t.deepEqual({
     a: 'bar',
-    b: 'bar'
+    b: 'bar',
   }, result);
 });
 
@@ -31,21 +31,21 @@ test('uses instruction after query children expression (object)', (t) => {
 
   const x = pianola({
     subroutines: {
-      foo
-    }
+      foo,
+    },
   });
 
   const result = x([
     {
       a: 'foo',
-      b: 'foo'
+      b: 'foo',
     },
-    'foo'
+    'foo',
   ], 'qux');
 
   t.deepEqual(foo.args[2][0], {
     a: 'bar',
-    b: 'bar'
+    b: 'bar',
   });
 
   t.true(result === 'bar');
@@ -56,16 +56,16 @@ test('uses instruction after query children expression (array)', (t) => {
 
   const x = pianola({
     subroutines: {
-      foo
-    }
+      foo,
+    },
   });
 
   const result = x([
     [
       'foo',
-      'foo'
+      'foo',
     ],
-    'foo'
+    'foo',
   ], 'qux');
 
   t.true(foo.args[2][0] === 'bar');
@@ -78,18 +78,18 @@ test('uses instruction after query children expression (nested arrays)', (t) => 
 
   const x = pianola({
     subroutines: {
-      foo
-    }
+      foo,
+    },
   });
 
   const result = x([
     [
       [
-        'foo'
+        'foo',
       ],
-      'foo'
+      'foo',
     ],
-    'foo'
+    'foo',
   ], 'qux');
 
   t.true(foo.args[1][0] === 'bar');

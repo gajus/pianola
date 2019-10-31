@@ -11,8 +11,8 @@ test('passes on array result to the next subroutine', (t) => {
   const x = pianola({
     subroutines: {
       bar,
-      foo
-    }
+      foo,
+    },
   });
 
   const result = x('foo >| bar', 'qux');
@@ -31,8 +31,8 @@ test('calls handleResult for each intermediate result', (t) => {
     handleResult,
     subroutines: {
       bar,
-      foo
-    }
+      foo,
+    },
   });
 
   x('foo >| bar', 'qux');
@@ -44,17 +44,17 @@ test('calls handleResult for each intermediate result', (t) => {
       [
         1,
         2,
-        3
+        3,
       ],
-      'qux'
+      'qux',
     ],
     [
       'a',
       [
         1,
         2,
-        3
-      ]
-    ]
+        3,
+      ],
+    ],
   ]);
 });

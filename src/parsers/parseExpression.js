@@ -1,14 +1,14 @@
 // @flow
 
 import {
-  Parser
+  Parser,
 } from 'nearley';
 import expressionGrammar from '../grammars/expressionGrammar';
 import {
-  PianolaError
+  PianolaError,
 } from '../errors';
 import type {
-  InstructionType
+  InstructionType,
 } from '../types';
 
 export default (expression: string): $ReadOnlyArray<InstructionType> => {

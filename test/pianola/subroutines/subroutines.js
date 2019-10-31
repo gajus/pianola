@@ -4,14 +4,14 @@ import test from 'ava';
 import sinon from 'sinon';
 import pianola, {
   FinalResultSentinel,
-  NotFoundError
+  NotFoundError,
 } from '../../../src';
 
 test('empty instructions return the original input value', (t) => {
   const startValue = {};
 
   const x = pianola({
-    subroutines: {}
+    subroutines: {},
   });
 
   t.true(x([], startValue) === startValue);
@@ -22,8 +22,8 @@ test('executes a subroutine and returns the subroutine result value', (t) => {
 
   const x = pianola({
     subroutines: {
-      foo
-    }
+      foo,
+    },
   });
 
   const result = x('foo', null);
@@ -36,8 +36,8 @@ test('executes the first subroutine with the input value', (t) => {
 
   const x = pianola({
     subroutines: {
-      foo
-    }
+      foo,
+    },
   });
 
   x('foo', 'bar');
@@ -53,8 +53,8 @@ test('short-circuits the subroutine after receiving FinalResultSentinel', (t) =>
   const x = pianola({
     subroutines: {
       bar,
-      foo
-    }
+      foo,
+    },
   });
 
   const result = x('foo | bar', null);
@@ -68,8 +68,8 @@ test('executes a subroutine with a list of the parameter values', (t) => {
 
   const x = pianola({
     subroutines: {
-      foo
-    }
+      foo,
+    },
   });
 
   x('foo bar baz', 'qux');
@@ -86,8 +86,8 @@ test('executes a subroutine with a user configured bindle', (t) => {
   const x = pianola({
     bindle,
     subroutines: {
-      foo
-    }
+      foo,
+    },
   });
 
   x('foo', 'qux');
@@ -98,7 +98,7 @@ test('executes a subroutine with a user configured bindle', (t) => {
 
 test('throws an error if a subroutine does not exist', (t) => {
   const x = pianola({
-    subroutines: {}
+    subroutines: {},
   });
 
   t.throws(() => {
@@ -113,8 +113,8 @@ test('calls handleResult for each intermediate result', (t) => {
   const x = pianola({
     handleResult,
     subroutines: {
-      foo
-    }
+      foo,
+    },
   });
 
   const result = x('foo | foo | foo', 'qux');
@@ -123,16 +123,16 @@ test('calls handleResult for each intermediate result', (t) => {
   t.deepEqual(handleResult.args, [
     [
       'FOO',
-      'qux'
+      'qux',
     ],
     [
       'FOO',
-      'FOO'
+      'FOO',
     ],
     [
       'FOO',
-      'FOO'
-    ]
+      'FOO',
+    ],
   ]);
 
   t.true(result === 'FOO');

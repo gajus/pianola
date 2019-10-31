@@ -1,17 +1,19 @@
 // @flow
 
+/* eslint-disable fp/no-class, fp/no-this */
+
 import {
   createConfiguration,
-  createQuery
+  createQuery,
 } from './factories';
 import {
   NotFoundError,
-  PianolaError
+  PianolaError,
 } from './errors';
 import type {
   DenormalizedQueryType,
   OperatorType,
-  UserConfigurationType
+  UserConfigurationType,
 } from './types';
 
 class FinalResultSentinel {
@@ -95,12 +97,12 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
 export {
   FinalResultSentinel,
   NotFoundError,
-  PianolaError
+  PianolaError,
 };
 
 export default (userConfiguration: UserConfigurationType) => {
   // eslint-disable-next-line flowtype/no-weak-types
-  return (denormalizedQuery: DenormalizedQueryType, startValue: mixed): any => {
+  return (denormalizedQuery: DenormalizedQueryType, startValue: any): any => {
     const configuration = createConfiguration(userConfiguration);
 
     const instructions = createQuery(denormalizedQuery);
@@ -110,7 +112,7 @@ export default (userConfiguration: UserConfigurationType) => {
       startValue,
       configuration.subroutines,
       configuration.bindle,
-      configuration.handleResult
+      configuration.handleResult,
     );
   };
 };
