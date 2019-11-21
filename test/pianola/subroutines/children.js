@@ -4,7 +4,7 @@ import test from 'ava';
 import sinon from 'sinon';
 import pianola from '../../../src';
 
-test('names results when instruction is a {[key: string]: [pianola expression]}', (t) => {
+test('names results when instruction is a {[key: string]: [pianola expression]}', async (t) => {
   const foo = sinon.stub().returns('bar');
 
   const x = pianola({
@@ -13,7 +13,7 @@ test('names results when instruction is a {[key: string]: [pianola expression]}'
     },
   });
 
-  const result = x([
+  const result = await x([
     {
       a: 'foo',
       b: 'foo',
@@ -26,7 +26,7 @@ test('names results when instruction is a {[key: string]: [pianola expression]}'
   }, result);
 });
 
-test('uses instruction after query children expression (object)', (t) => {
+test('uses instruction after query children expression (object)', async (t) => {
   const foo = sinon.stub().returns('bar');
 
   const x = pianola({
@@ -35,7 +35,7 @@ test('uses instruction after query children expression (object)', (t) => {
     },
   });
 
-  const result = x([
+  const result = await x([
     {
       a: 'foo',
       b: 'foo',
@@ -48,10 +48,10 @@ test('uses instruction after query children expression (object)', (t) => {
     b: 'bar',
   });
 
-  t.true(result === 'bar');
+  t.is(result, 'bar');
 });
 
-test('uses instruction after query children expression (array)', (t) => {
+test('uses instruction after query children expression (array)', async (t) => {
   const foo = sinon.stub().returns('bar');
 
   const x = pianola({
@@ -60,7 +60,7 @@ test('uses instruction after query children expression (array)', (t) => {
     },
   });
 
-  const result = x([
+  const result = await x([
     [
       'foo',
       'foo',
@@ -68,12 +68,12 @@ test('uses instruction after query children expression (array)', (t) => {
     'foo',
   ], 'qux');
 
-  t.true(foo.args[2][0] === 'bar');
+  t.is(foo.args[2][0], 'bar');
 
-  t.true(result === 'bar');
+  t.is(result, 'bar');
 });
 
-test('uses instruction after query children expression (nested arrays)', (t) => {
+test('uses instruction after query children expression (nested arrays)', async (t) => {
   const foo = sinon.stub().returns('bar');
 
   const x = pianola({
@@ -82,7 +82,7 @@ test('uses instruction after query children expression (nested arrays)', (t) => 
     },
   });
 
-  const result = x([
+  const result = await x([
     [
       [
         'foo',
@@ -92,8 +92,8 @@ test('uses instruction after query children expression (nested arrays)', (t) => 
     'foo',
   ], 'qux');
 
-  t.true(foo.args[1][0] === 'bar');
-  t.true(foo.args[2][0] === 'bar');
+  t.is(foo.args[1][0], 'bar');
+  t.is(foo.args[2][0], 'bar');
 
-  t.true(result === 'bar');
+  t.is(result, 'bar');
 });

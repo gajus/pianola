@@ -6,7 +6,7 @@ import pianola, {
   FinalResultSentinel,
 } from '../../../src';
 
-test('executes the next subroutine with the result of the parent subroutine', (t) => {
+test('executes the next subroutine with the result of the parent subroutine', async (t) => {
   const foo = sinon.stub().returns('FOO');
   const bar = sinon.stub();
 
@@ -17,13 +17,13 @@ test('executes the next subroutine with the result of the parent subroutine', (t
     },
   });
 
-  x('foo | bar', null);
+  await x('foo | bar', null);
 
   t.true(bar.calledOnce);
   t.true(bar.calledWith('FOO'));
 });
 
-test('short-circuits the subroutine after receiving FinalResultSentinel', (t) => {
+test('short-circuits the subroutine after receiving FinalResultSentinel', async (t) => {
   const foo = sinon.stub().returns(new FinalResultSentinel('FOO'));
   const bar = sinon.stub().throws(new Error());
 
@@ -34,13 +34,14 @@ test('short-circuits the subroutine after receiving FinalResultSentinel', (t) =>
     },
   });
 
-  const result = x('foo | bar', null);
+  const result = await x('foo | bar', null);
 
   t.true(foo.calledOnce);
-  t.true(result === 'FOO');
+
+  t.is(result, 'FOO');
 });
 
-test('executes a subroutine for each value in an array result', (t) => {
+test('executes a subroutine for each value in an array result', async (t) => {
   const foo = sinon.stub().returns([1, 2, 3]);
   const bar = sinon.stub();
 
@@ -55,12 +56,12 @@ test('executes a subroutine for each value in an array result', (t) => {
     },
   });
 
-  const result = x('foo | bar', 'qux');
+  const result = await x('foo | bar', 'qux');
 
   t.deepEqual(result, ['a', 'b', 'c']);
 });
 
-test('calls handleResult for each intermediate result', (t) => {
+test('calls handleResult for each intermediate result', async (t) => {
   const handleResult = sinon.stub();
   const foo = sinon.stub().returns('FOO');
 
@@ -71,9 +72,10 @@ test('calls handleResult for each intermediate result', (t) => {
     },
   });
 
-  const result = x('foo | foo | foo', 'qux');
+  const result = await x('foo | foo | foo', 'qux');
 
-  t.true(handleResult.callCount === 3);
+  t.is(handleResult.callCount, 3);
+
   t.deepEqual(handleResult.args, [
     [
       'FOO',
@@ -89,5 +91,5 @@ test('calls handleResult for each intermediate result', (t) => {
     ],
   ]);
 
-  t.true(result === 'FOO');
+  t.is(result, 'FOO');
 });

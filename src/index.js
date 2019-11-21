@@ -26,7 +26,7 @@ class FinalResultSentinel {
 }
 
 // eslint-disable-next-line complexity, flowtype/no-weak-types
-const play = (instructions, startValue, subroutines, bindle: Object, handleResult?: Function) => {
+const play = async (instructions, startValue, subroutines, bindle: Object, handleResult?: Function) => {
   let result = startValue;
 
   let index = 0;
@@ -51,7 +51,7 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
       const childrenNames = Object.keys(instruction.namedChildren);
 
       for (const childName of childrenNames) {
-        children[childName] = play(instruction.namedChildren[childName], result, subroutines, bindle, handleResult);
+        children[childName] = await play(instruction.namedChildren[childName], result, subroutines, bindle, handleResult);
       }
 
       const remainingInstructions = instructions.slice(index);
@@ -60,7 +60,7 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
     } else if (instruction.type === 'MERGE_ADOPTION') {
       let value = result;
 
-      value = play(instruction.margeChildren, value, subroutines, bindle, handleResult);
+      value = await play(instruction.margeChildren, value, subroutines, bindle, handleResult);
 
       const remainingInstructions = instructions.slice(index);
 
@@ -100,9 +100,13 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
     if (Array.isArray(result) && nextOperator === 'PIPELINE') {
       const remainingInstructions = instructions.slice(index);
 
-      return result.map((newStartValue) => {
-        return play(remainingInstructions, newStartValue, subroutines, bindle, handleResult);
-      });
+      const results = [];
+
+      for (const newStartValue of result) {
+        results.push(await play(remainingInstructions, newStartValue, subroutines, bindle, handleResult));
+      }
+
+      return results;
     }
   }
 
@@ -117,7 +121,7 @@ export {
 
 export default (userConfiguration: UserConfigurationType) => {
   // eslint-disable-next-line flowtype/no-weak-types
-  return (denormalizedQuery: DenormalizedQueryType, startValue: any): any => {
+  return async (denormalizedQuery: DenormalizedQueryType, startValue: any): any => {
     const configuration = createConfiguration(userConfiguration);
 
     const instructions = createQuery(denormalizedQuery);

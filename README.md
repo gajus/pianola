@@ -41,7 +41,7 @@ A declarative function composition and evaluation engine.
 A subroutine is a function used to advance the evaluator, e.g.
 
 ```js
-x('foo | bar baz', 'qux');
+await x('foo | bar baz', 'qux');
 
 ```
 
@@ -55,7 +55,7 @@ Subroutines are executed in the order in which they are defined – the result o
 Multiple subroutines can be written as an array. The following example is equivalent to the earlier example.
 
 ```js
-x([
+await x([
   'foo',
   'bar baz'
 ], 'qux');
@@ -91,7 +91,7 @@ const x = pianola({
   }
 });
 
-x('mySubourtine foo bar | mySubourtine baz qux', 0);
+await x('mySubourtine foo bar | mySubourtine baz qux', 0);
 
 ```
 
@@ -108,7 +108,7 @@ The above example prints:
 Subroutines can be inlined by adding a function to the instructions array, e.g.
 
 ```js
-x([
+await x([
   'foo',
   'bar',
   (subjectValue) => {
@@ -142,7 +142,7 @@ const x = pianola({
   }
 });
 
-x('a | b', 0);
+await x('a | b', 0);
 
 ```
 
@@ -174,7 +174,7 @@ parameters ->
 Example:
 
 ```js
-x('foo bar baz', 'qux');
+await x('foo bar baz', 'qux');
 
 ```
 
@@ -187,7 +187,7 @@ In this example,
 Multiple subroutines can be combined using an array:
 
 ```js
-x([
+await x([
   'foo bar baz',
   'corge grault garply'
 ], 'qux');
@@ -213,16 +213,16 @@ The pipeline operator tells expression evaluator to pass the result of the previ
 The following examples are equivalent:
 
 ```js
-x([
+await x([
   'foo bar baz',
   'qux quux quuz'
 ]);
 
-x([
+await x([
   'foo bar baz | foo bar baz'
 ]);
 
-x('foo bar baz | foo bar baz');
+await x('foo bar baz | foo bar baz');
 
 ```
 
@@ -235,7 +235,7 @@ The pipeline operator tells expression evaluator to pass the result of the previ
 The following examples are equivalent:
 
 ```js
-x('foo >| bar');
+await x('foo >| bar');
 
 ```
 
@@ -287,7 +287,7 @@ const x = pianola({
   }
 });
 
-x('foo | bar');
+await x('foo | bar');
 
 // [
 //   'one',
@@ -312,7 +312,7 @@ const x = pianola({
   }
 });
 
-x([
+await x([
   {
     foo0: 'foo corge',
     foo1: 'foo grault',

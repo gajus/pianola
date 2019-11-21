@@ -7,10 +7,12 @@ type QueryChildrenType = {
   ...,
 };
 
+type MaybePromiseType<T> = T | Promise<T>;
+
 type QueryInstructionType = string;
 
 // eslint-disable-next-line flowtype/no-weak-types
-export type InlineSubroutineType = (subject: any, bindle: BindleType) => any;
+export type InlineSubroutineType = (subject: any, bindle: BindleType) => MaybePromiseType<any>;
 
 export type OperatorType = 'PIPELINE' | 'AGGREGATE_PIPELINE';
 
@@ -62,7 +64,7 @@ export type QueryType = $ReadOnlyArray<InstructionType>;
 type BindleType = Object;
 
 // eslint-disable-next-line flowtype/no-weak-types
-export type SubroutineType = (subject: any, values: $ReadOnlyArray<string>, bindle: BindleType) => any;
+export type SubroutineType = (subject: any, values: $ReadOnlyArray<string>, bindle: BindleType) => MaybePromiseType<any>;
 
 // eslint-disable-next-line flowtype/no-weak-types
 export type ResultHandlerType = (output: any, input: any) => void;

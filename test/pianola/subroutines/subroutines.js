@@ -7,17 +7,19 @@ import pianola, {
   NotFoundError,
 } from '../../../src';
 
-test('empty instructions return the original input value', (t) => {
+test('empty instructions return the original input value', async (t) => {
   const startValue = {};
 
   const x = pianola({
     subroutines: {},
   });
 
-  t.true(x([], startValue) === startValue);
+  const result = await x([], startValue);
+
+  t.deepEqual(result, startValue);
 });
 
-test('executes a subroutine and returns the subroutine result value', (t) => {
+test('executes a subroutine and returns the subroutine result value', async (t) => {
   const foo = sinon.stub().returns('bar');
 
   const x = pianola({
@@ -26,12 +28,12 @@ test('executes a subroutine and returns the subroutine result value', (t) => {
     },
   });
 
-  const result = x('foo', null);
+  const result = await x('foo', null);
 
-  t.true(result === 'bar');
+  t.is(result, 'bar');
 });
 
-test('executes the first subroutine with the input value', (t) => {
+test('executes the first subroutine with the input value', async (t) => {
   const foo = sinon.stub().returns();
 
   const x = pianola({
@@ -40,13 +42,13 @@ test('executes the first subroutine with the input value', (t) => {
     },
   });
 
-  x('foo', 'bar');
+  await x('foo', 'bar');
 
   t.true(foo.calledOnce);
   t.true(foo.calledWith('bar'));
 });
 
-test('short-circuits the subroutine after receiving FinalResultSentinel', (t) => {
+test('short-circuits the subroutine after receiving FinalResultSentinel', async (t) => {
   const foo = sinon.stub().returns(new FinalResultSentinel('FOO'));
   const bar = sinon.stub().throws(new Error());
 
@@ -57,13 +59,13 @@ test('short-circuits the subroutine after receiving FinalResultSentinel', (t) =>
     },
   });
 
-  const result = x('foo | bar', null);
+  const result = await x('foo | bar', null);
 
   t.true(foo.calledOnce);
-  t.true(result === 'FOO');
+  t.is(result, 'FOO');
 });
 
-test('executes a subroutine with a list of the parameter values', (t) => {
+test('executes a subroutine with a list of the parameter values', async (t) => {
   const foo = sinon.stub();
 
   const x = pianola({
@@ -72,13 +74,13 @@ test('executes a subroutine with a list of the parameter values', (t) => {
     },
   });
 
-  x('foo bar baz', 'qux');
+  await x('foo bar baz', 'qux');
 
   t.true(foo.calledOnce);
   t.true(foo.calledWith('qux', ['bar', 'baz']));
 });
 
-test('executes a subroutine with a user configured bindle', (t) => {
+test('executes a subroutine with a user configured bindle', async (t) => {
   const foo = sinon.stub();
 
   const bindle = {};
@@ -90,23 +92,23 @@ test('executes a subroutine with a user configured bindle', (t) => {
     },
   });
 
-  x('foo', 'qux');
+  await x('foo', 'qux');
 
   t.true(foo.calledOnce);
   t.true(foo.calledWith('qux', [], bindle));
 });
 
-test('throws an error if a subroutine does not exist', (t) => {
+test('throws an error if a subroutine does not exist', async (t) => {
   const x = pianola({
     subroutines: {},
   });
 
-  t.throws(() => {
-    x('foo', null);
-  }, NotFoundError);
+  const error = await t.throwsAsync(x('foo', null));
+
+  t.true(error instanceof NotFoundError);
 });
 
-test('calls handleResult for each intermediate result', (t) => {
+test('calls handleResult for each intermediate result', async (t) => {
   const handleResult = sinon.stub();
   const foo = sinon.stub().returns('FOO');
 
@@ -117,9 +119,10 @@ test('calls handleResult for each intermediate result', (t) => {
     },
   });
 
-  const result = x('foo | foo | foo', 'qux');
+  const result = await x('foo | foo | foo', 'qux');
 
-  t.true(handleResult.callCount === 3);
+  t.is(handleResult.callCount, 3);
+
   t.deepEqual(handleResult.args, [
     [
       'FOO',
@@ -135,10 +138,10 @@ test('calls handleResult for each intermediate result', (t) => {
     ],
   ]);
 
-  t.true(result === 'FOO');
+  t.is(result, 'FOO');
 });
 
-test('executes an inline subroutine', (t) => {
+test('executes an inline subroutine', async (t) => {
   const foo = sinon.stub().returns('FOO');
   const bar = sinon.stub();
 
@@ -152,7 +155,7 @@ test('executes an inline subroutine', (t) => {
     },
   });
 
-  x([
+  await x([
     'foo',
     (subject) => {
       t.is(subject, 'FOO');
