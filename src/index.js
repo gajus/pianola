@@ -9,6 +9,7 @@ import {
 import {
   NotFoundError,
   PianolaError,
+  UnexpectedStateError,
 } from './errors';
 import type {
   DenormalizedQueryType,
@@ -30,17 +31,21 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
 
   let index = 0;
 
+  if (!Array.isArray(instructions)) {
+    throw new UnexpectedStateError();
+  }
+
   for (const instruction of instructions) {
     index++;
 
-    if (instruction.operator) {
+    if (instruction.type === 'OPERATOR') {
       // eslint-disable-next-line no-continue
       continue;
     }
 
     const nextOperator: OperatorType | null = instructions[index] && instructions[index].operator || null;
 
-    if (instruction.namedChildren) {
+    if (instruction.type === 'NAMED_ADOPTION') {
       const children = {};
 
       const childrenNames = Object.keys(instruction.namedChildren);
@@ -52,7 +57,7 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
       const remainingInstructions = instructions.slice(index);
 
       return play(remainingInstructions, children, subroutines, bindle, handleResult);
-    } else if (instruction.margeChildren) {
+    } else if (instruction.type === 'MERGE_ADOPTION') {
       let value = result;
 
       value = play(instruction.margeChildren, value, subroutines, bindle, handleResult);
@@ -64,11 +69,21 @@ const play = (instructions, startValue, subroutines, bindle: Object, handleResul
 
     const lastResult = result;
 
-    if (!subroutines[instruction.subroutine]) {
-      throw new NotFoundError('"' + instruction.subroutine + '" subroutine does not exist.');
-    }
+    if (instruction.type === 'INLINE_SUBROUTINE') {
+      result = instruction.inlineSubroutine(result, bindle);
+    } else if (instruction.type === 'SUBROUTINE') {
+      if (!subroutines[instruction.subroutine]) {
+        throw new NotFoundError('"' + instruction.subroutine + '" subroutine does not exist.');
+      }
 
-    result = subroutines[instruction.subroutine](result, instruction.values, bindle);
+      result = subroutines[instruction.subroutine](
+        result,
+        instruction.values,
+        bindle,
+      );
+    } else {
+      throw new UnexpectedStateError();
+    }
 
     if (result instanceof FinalResultSentinel) {
       return result.value;

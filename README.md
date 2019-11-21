@@ -12,6 +12,7 @@ A declarative function composition and evaluation engine.
 * [Configuration](#configuration)
 * [Subroutines](#subroutines)
   * [Defining subroutines](#defining-subroutines)
+  * [Inline subroutines](#inline-subroutines)
 * [Sentinels](#sentinels)
   * [`FinalResultSentinel`](#finalresultsentinel)
 * [Expression reference](#expression-reference)
@@ -99,6 +100,21 @@ The above example prints:
 ```
 0 "foo" "bar"
 1 "baz" "qux"
+
+```
+
+### Inline subroutines
+
+Subroutines can be inlined by adding a function to the instructions array, e.g.
+
+```js
+x([
+  'foo',
+  'bar',
+  (subjectValue) => {
+    return subjectValue.toUpperCase();
+  },
+], 'qux');
 
 ```
 

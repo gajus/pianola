@@ -137,3 +137,31 @@ test('calls handleResult for each intermediate result', (t) => {
 
   t.true(result === 'FOO');
 });
+
+test('executes an inline subroutine', (t) => {
+  const foo = sinon.stub().returns('FOO');
+  const bar = sinon.stub();
+
+  const bindle = {};
+
+  const x = pianola({
+    bindle,
+    subroutines: {
+      bar,
+      foo,
+    },
+  });
+
+  x([
+    'foo',
+    (subject) => {
+      t.is(subject, 'FOO');
+
+      return 'BAR';
+    },
+    'bar',
+  ], 'qux');
+
+  t.true(bar.calledOnce);
+  t.true(bar.calledWith('BAR', [], bindle));
+});

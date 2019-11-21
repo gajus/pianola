@@ -9,7 +9,7 @@ import type {
 } from '../types';
 
 const createQuery = (denormalizedQuery: DenormalizedQueryType): QueryType => {
-  if (typeof denormalizedQuery === 'string' || !Array.isArray(denormalizedQuery)) {
+  if (typeof denormalizedQuery === 'string' || typeof denormalizedQuery === 'function' || !Array.isArray(denormalizedQuery)) {
     // eslint-disable-next-line no-param-reassign
     denormalizedQuery = [
       denormalizedQuery,
@@ -35,6 +35,19 @@ const createQuery = (denormalizedQuery: DenormalizedQueryType): QueryType => {
       if (nextExpression) {
         commands.push({
           operator: 'PIPELINE',
+          type: 'OPERATOR',
+        });
+      }
+    } else if (typeof maybeExpression === 'function') {
+      commands.push({
+        inlineSubroutine: maybeExpression,
+        type: 'INLINE_SUBROUTINE',
+      });
+
+      if (nextExpression) {
+        commands.push({
+          operator: 'PIPELINE',
+          type: 'OPERATOR',
         });
       }
     } else if (Array.isArray(maybeExpression)) {
@@ -42,6 +55,7 @@ const createQuery = (denormalizedQuery: DenormalizedQueryType): QueryType => {
 
       commands.push({
         margeChildren: children,
+        type: 'MERGE_ADOPTION',
       });
     } else {
       const adoption = maybeExpression;
@@ -56,6 +70,7 @@ const createQuery = (denormalizedQuery: DenormalizedQueryType): QueryType => {
 
       commands.push({
         namedChildren: children,
+        type: 'NAMED_ADOPTION',
       });
     }
   }

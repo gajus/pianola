@@ -9,24 +9,36 @@ type QueryChildrenType = {
 
 type QueryInstructionType = string;
 
+// eslint-disable-next-line flowtype/no-weak-types
+export type InlineSubroutineType = (subject: any, bindle: BindleType) => any;
+
 export type OperatorType = 'PIPELINE' | 'AGGREGATE_PIPELINE';
 
 export type DenormalizedQueryType =
   QueryInstructionType |
   QueryChildrenType |
-  $ReadOnlyArray<DenormalizedQueryType>;
+  $ReadOnlyArray<DenormalizedQueryType> |
+  InlineSubroutineType;
+
+export type InlineSubroutineInstructionType = {|
+  +inlineSubroutine: InlineSubroutineType,
+  +type: 'INLINE_SUBROUTINE',
+|};
 
 export type SubroutineInstructionType = {|
   +subroutine: string,
+  +type: 'SUBROUTINE',
   +values: $ReadOnlyArray<string>,
 |};
 
 export type OperatorInstructionType = {|
   +operator: OperatorType,
+  +type: 'OPERATOR',
 |};
 
 export type MergeAdoptionInstructionType = {|
   +margeChildren: QueryType,
+  +type: 'MERGE_ADOPTION',
 |};
 
 export type NamedAdoptionInstructionType = {|
@@ -34,13 +46,15 @@ export type NamedAdoptionInstructionType = {|
     +[key: string]: QueryType,
     ...,
   },
+  +type: 'NAMED_ADOPTION',
 |};
 
 export type InstructionType =
   MergeAdoptionInstructionType |
   NamedAdoptionInstructionType |
   SubroutineInstructionType |
-  OperatorInstructionType;
+  OperatorInstructionType |
+  InlineSubroutineInstructionType;
 
 export type QueryType = $ReadOnlyArray<InstructionType>;
 

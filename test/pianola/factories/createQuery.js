@@ -15,13 +15,16 @@ test('converts string expressions to subroutines', (t) => {
   const query: QueryType = [
     {
       subroutine: 'foo',
+      type: 'SUBROUTINE',
       values: [],
     },
     {
       operator: 'PIPELINE',
+      type: 'OPERATOR',
     },
     {
       subroutine: 'bar',
+      type: 'SUBROUTINE',
       values: [],
     },
   ];
@@ -38,27 +41,34 @@ test('concatenates pipe separated subroutines with the sibling subroutines', (t)
   const query = [
     {
       subroutine: 'foo0',
+      type: 'SUBROUTINE',
       values: [],
     },
     {
       operator: 'PIPELINE',
+      type: 'OPERATOR',
     },
     {
       subroutine: 'foo1',
+      type: 'SUBROUTINE',
       values: [],
     },
     {
       operator: 'PIPELINE',
+      type: 'OPERATOR',
     },
     {
       subroutine: 'foo2',
+      type: 'SUBROUTINE',
       values: [],
     },
     {
       operator: 'PIPELINE',
+      type: 'OPERATOR',
     },
     {
       subroutine: 'bar',
+      type: 'SUBROUTINE',
       values: [],
     },
   ];
@@ -79,33 +89,40 @@ test('converts simple object command into "adopt" subroutine (string expression)
   const query: QueryType = [
     {
       subroutine: 'foo',
+      type: 'SUBROUTINE',
       values: [],
     },
     {
       operator: 'PIPELINE',
+      type: 'OPERATOR',
     },
     {
       subroutine: 'bar',
+      type: 'SUBROUTINE',
       values: [],
     },
     {
       operator: 'PIPELINE',
+      type: 'OPERATOR',
     },
     {
       namedChildren: {
         baz: [
           {
             subroutine: 'baz0',
+            type: 'SUBROUTINE',
             values: [],
           },
         ],
         qux: [
           {
             subroutine: 'qux0',
+            type: 'SUBROUTINE',
             values: [],
           },
         ],
       },
+      type: 'NAMED_ADOPTION',
     },
   ];
 
@@ -127,23 +144,28 @@ test('converts simple object command into "adopt" subroutine (string expression)
   const query: QueryType = [
     {
       subroutine: 'foo',
+      type: 'SUBROUTINE',
       values: [],
     },
     {
       operator: 'PIPELINE',
+      type: 'OPERATOR',
     },
     {
       subroutine: 'bar',
+      type: 'SUBROUTINE',
       values: [],
     },
     {
       operator: 'PIPELINE',
+      type: 'OPERATOR',
     },
     {
       namedChildren: {
         baz: [
           {
             subroutine: 'baz',
+            type: 'SUBROUTINE',
             values: [],
           },
         ],
@@ -153,13 +175,16 @@ test('converts simple object command into "adopt" subroutine (string expression)
               quux: [
                 {
                   subroutine: 'quux',
+                  type: 'SUBROUTINE',
                   values: [],
                 },
               ],
             },
+            type: 'NAMED_ADOPTION',
           },
         ],
       },
+      type: 'NAMED_ADOPTION',
     },
   ];
 
@@ -183,33 +208,40 @@ test('converts simple object command into "adopt" subroutine (array expression)'
   const query: QueryType = [
     {
       subroutine: 'foo',
+      type: 'SUBROUTINE',
       values: [],
     },
     {
       operator: 'PIPELINE',
+      type: 'OPERATOR',
     },
     {
       subroutine: 'bar',
+      type: 'SUBROUTINE',
       values: [],
     },
     {
       operator: 'PIPELINE',
+      type: 'OPERATOR',
     },
     {
       namedChildren: {
         baz: [
           {
             subroutine: 'baz0',
+            type: 'SUBROUTINE',
             values: [],
           },
         ],
         qux: [
           {
             subroutine: 'qux0',
+            type: 'SUBROUTINE',
             values: [],
           },
         ],
       },
+      type: 'NAMED_ADOPTION',
     },
   ];
 

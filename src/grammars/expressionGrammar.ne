@@ -7,8 +7,8 @@ subroutines ->
   | subroutine
 
 subroutine ->
-    subroutineName __ parameters {% d => ({subroutine: d[0], values: d[2]}) %}
-  | subroutineName {% d => ({subroutine: d[0], values: []}) %}
+    subroutineName __ parameters {% d => ({subroutine: d[0], type: 'SUBROUTINE', values: d[2]}) %}
+  | subroutineName {% d => ({subroutine: d[0], type: 'SUBROUTINE', values: []}) %}
 
 subroutineName ->
   [a-zA-Z0-9\-_]:+ {% d => d[0].join('') %}
@@ -46,5 +46,5 @@ __ ->
   [ ]:+ {% d => null %}
 
 subroutineOperator ->
-    ">|" {% d => ({operator: 'AGGREGATE_PIPELINE'}) %}
-  | "|" {% d => ({operator: 'PIPELINE'}) %}
+    ">|" {% d => ({operator: 'AGGREGATE_PIPELINE', type: 'OPERATOR'}) %}
+  | "|" {% d => ({operator: 'PIPELINE', type: 'OPERATOR'}) %}
